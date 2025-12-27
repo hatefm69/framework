@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMI.WebApi", "CMI.WebApi\CMI.WebApi.csproj", "{275A8745-15F1-416B-8F7B-323EFDC67E06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMI.Model", "CMI.Model\CMI.Model.csproj", "{97A3BA13-4929-48E2-A025-A8A3C2AB2087}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMI.Service", "CMI.Service\CMI.Service.csproj", "{6123FE2A-985B-4204-AD84-E5912EFCB9CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{275A8745-15F1-416B-8F7B-323EFDC67E06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{275A8745-15F1-416B-8F7B-323EFDC67E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{275A8745-15F1-416B-8F7B-323EFDC67E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{275A8745-15F1-416B-8F7B-323EFDC67E06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97A3BA13-4929-48E2-A025-A8A3C2AB2087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97A3BA13-4929-48E2-A025-A8A3C2AB2087}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97A3BA13-4929-48E2-A025-A8A3C2AB2087}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97A3BA13-4929-48E2-A025-A8A3C2AB2087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6123FE2A-985B-4204-AD84-E5912EFCB9CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6123FE2A-985B-4204-AD84-E5912EFCB9CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6123FE2A-985B-4204-AD84-E5912EFCB9CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6123FE2A-985B-4204-AD84-E5912EFCB9CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {569FB00F-178F-4538-826C-5589AB46C16E}
+	EndGlobalSection
+EndGlobal

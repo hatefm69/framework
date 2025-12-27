@@ -1,0 +1,14 @@
+.opblock-summary-description,
+.renderedMarkdown {
+    text-align: right !important;
+    font-family: 'B Nazanin', 'B Yekan',Tahoma !important;
+}
+
+.opblock-summary-description {
+    color: #0000A0 !important;
+    font-size: 14px !important;
+}
+.renderedMarkdown {
+    color: #A00000 !important;
+    font-size: 16px !important;
+}

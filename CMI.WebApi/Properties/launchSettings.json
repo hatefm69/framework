@@ -1,0 +1,109 @@
+﻿{
+  "profiles": {
+    "CMI.WebAPI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+
+        "CMI_AUTH_COOKIE_NAME": "cmiAuth",
+
+        "CMI_APPLICATION_PASSWORD": "CMIpss",
+
+        "CMI_SSO_CLIENT_ID": "cmiDevelop",
+        "CMI_SSO_CLIENT_SECRET": "qazWSX@123",
+
+        "SSO_URL": "https://zarrir.omidtech.co/",
+        "EXTERNAL_SSO_URL": "https://zarrir.omidtech.co/",
+
+        "SSO_AUTHORIZE_URL": "authorize",
+        "SSO_TOKEN_URL": "token",
+        "SSO_USER_INFO_URL": "api/profile",
+        "SSO_TOKEN_REVOKE_URL": "revocation",
+        "SSO_LOGOUT_URL": "api/auth/logout",
+        "SSO_SITEMAP_URL": "api/sitemap",
+
+        "CLIENT_APP_URL": "http://localhost:1728",
+        "CLIENT_PATH": "UIApp",
+        "CLIENT_PREFIX_URL": "UI",
+
+        "REDIS_IP": "192.168.140.168",
+        "REDIS_PORT": "26379",
+        "REDIS_SERVICE_NAME": "soroush-master",
+        "REDIS_PASSWORD": "qaz@123456789",
+        "REDIS_SSL": "false",
+
+        "OPERATION_SYSTEM": "windows",
+        "DATA_BASE_CONNECTION_STRING_CMI": "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.140.140)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=dwdev)));User Id=DWTEST;Password=dwtest;",
+        "DATA_BASE_PROVIDER_TYPE_CMI": "Oracle",
+        "MIGRATION_HISTORY_TABLE_NAME_CMI": "EF_MIGRATION_HISTORY",
+
+        "Afra_HeaderAuthorizationValue": "YWZyYTo0RnJBQV91JGVy",
+        "Afra_ServerAddress": "https://afra.omidtech.co/",
+
+        "Afra_Unit_GetUnitTypes": "service/unit/getUnitTypes",
+        "Afra_Unit_FindByNameWithUnitType": "service/unit/findByName",
+        "Afra_Unit_FindByName": "service/unit/findByName",
+        "Afra_Unit_FindByCode": "service/unit/findByCode",
+        "Afra_Unit_GetByType": "service/unit/getByType",
+        "Afra_Unit_GetParentPath": "service/unit/getParentPath",
+
+        "Afra_Position_FindByName": "service/position/findByName",
+        "Afra_Position_FindByCode": "service/position/findByCode",
+
+        "Afra_Personel_GetByUnitCode": "service/personnel/getByUnitCode",
+        "Afra_Personel_FindByNameAtUnitCode": "service/personnel/findByNameAtUnitCode",
+        "Afra_Personel_GetByPositionCode": "service/personnel/getByPositionCode",
+        "Afra_Personel_FindByNameAtPositionCode": "service/personnel/findByNameAtPositionCode",
+        "Afra_Personel_FindByName": "service/personnel/findByName",
+        "Afra_Personel_FindByMobileNumber": "service/personnel/findByMobileNumber",
+        "Afra_Personel_FindByNationalCode": "service/personnel/findByNationalCode",
+        "Afra_Personel_FindByCode": "service/personnel/findByCode",
+
+        "Afra_Province_ProvinceList": "service/province/list",
+        "Afra_Province_GetUnitsByProvinceCode": "service/province/GetUnits",
+        "Afra_Province_GetUnitsByCityCode": "service/city/GetUnits",
+        "Afra_Province_GetUnitsByCode": "service/province/GetUnitsByCode",
+        "Afra_Province_GetUnitsByName": "service/province/GetUnitsByName",
+
+        "Afra_City_GetUnitsByCode": "service/city/GetUnitsByCode",
+        "Afra_City_GetUnitsByName": "service/city/GetUnitsByName",
+        "Afra_City_CityList": "service/city/list",
+        "Afra_City_FindByCode": "service/city/FindByCode",
+        "Afra_City_FindByName": "service/city/FindByName",
+        "Afra_City_FindByProvinceCode": "service/city/FindByProvinceCode",
+
+        "Sana_Url": "https://saanaa.omidtech.co"
+        // "CMI_Sana_UserName": "cmi",
+        // "CMI_Sana_Password": "qaz@123"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5138"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_HTTP_PORTS": "8080"
+      },
+      "publishAllPorts": true,
+      "useSSL": false
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  },
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:60202/",
+      "sslPort": 44328
+    }
+  }
+}

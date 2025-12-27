@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DtoClasses\**" />
+    <EmbeddedResource Remove="DtoClasses\**" />
+    <None Remove="DtoClasses\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="FIS.AfraServices" Version="9.0.0" />
+    <PackageReference Include="FIS.CartableEngine" Version="9.0.0" />
+    <PackageReference Include="FIS.DataStorageFramework" Version="9.0.1" />
+    <PackageReference Include="FIS.Sana" Version="9.0.2" />
+    <PackageReference Include="FIS.SQL_Oracle" Version="9.0.3" />
+    <PackageReference Include="FIS.Tools" Version="9.0.0" />
+    <PackageReference Include="FIS.Utilities" Version="9.0.3" />
+    <PackageReference Include="FIS.ZarrirSecurity" Version="9.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CMI.Model\CMI.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="HelperClasses\Cartable\StateAction\" />
+  </ItemGroup>
+
+</Project>

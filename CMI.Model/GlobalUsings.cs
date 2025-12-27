@@ -1,0 +1,13 @@
+﻿global using CMI.Model.Entities;
+global using CMI.Model.Enums;
+global using CMI.Model.Models;
+global using FIS.DataStorageFramework.Classes;
+global using FIS.SQL_Oracle.Entities;
+global using FIS.SQL_Oracle.Mappings;
+global using FIS.Tools.ORM_Helper.Models;
+global using FIS.Tools.Service_Locator;
+global using FIS.Utilities.DateTimePartsTool;
+global using Microsoft.EntityFrameworkCore;
+global using System.ComponentModel;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using System.Reflection;

@@ -1,0 +1,6 @@
+@CMI.WebApi_HostAddress = http://localhost:5138
+
+GET {{CMI.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
