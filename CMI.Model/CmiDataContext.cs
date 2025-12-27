@@ -1,4 +1,4 @@
-﻿using CMI.Model.Mappings;
+using CMI.Model.Mappings;
 using FIS.SQL_Oracle;
 using System.Diagnostics.CodeAnalysis;
 
@@ -16,7 +16,9 @@ namespace CMI.Model
 
         public DbSet<InspectionSubGroup> InspectionSubGroups { get; set; }
 
-        // @#$(Auto Code Generator Part)-#001#
+        		public DbSet<LevelByHatef> LevelByHatefs { get; set; }
+
+// @#$(Auto Code Generator Part)-#001#
         #endregion
 
         // Events.
@@ -40,7 +42,8 @@ namespace CMI.Model
             modelBuilder.ApplyConfiguration(new InspectionGroupMap());
             modelBuilder.ApplyConfiguration(new InspectionSubGroupMap());
             modelBuilder.HasSequence<long>("INSPECTION_TERM_CODE_SEQ").StartsAt(1);
-            // @#$(Auto Code Generator Part)-#002#
+            			modelBuilder.ApplyConfiguration(new LevelByHatefMap());
+// @#$(Auto Code Generator Part)-#002#
             #endregion
         }
     }

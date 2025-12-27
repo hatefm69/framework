@@ -1,4 +1,4 @@
-﻿namespace CMI.WebApi.Classes
+namespace CMI.WebApi.Classes
 {
     /// <summary>
     /// The Auto mapper configuration for input and output dto
@@ -15,7 +15,8 @@
 
             CreateMap<InInspectionGroup, InspectionGroup>();
             CreateMap<InInspectionSubGroup, InspectionSubGroup>();
-            // @#$(Auto Code Generator Part)-#001#
+            			CreateMap<InLevelByHatef, LevelByHatef>();
+// @#$(Auto Code Generator Part)-#001#
 
             #endregion
 
@@ -23,7 +24,8 @@
 
             CreateMap<InspectionGroup, OutInspectionGroup>();
             CreateMap<InspectionSubGroup, OutInspectionSubGroup>();
-            // @#$(Auto Code Generator Part)-#002#
+            			CreateMap<LevelByHatef, OutLevelByHatef>();
+// @#$(Auto Code Generator Part)-#002#
 
             #endregion
         }

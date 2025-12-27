@@ -1,4 +1,4 @@
-﻿using CMI.Service.Classes;
+using CMI.Service.Classes;
 using FIS.DataStorageFramework.Extentions;
 using FIS.Utilities.ExcelFileGenerator;
 using FIS.WebAPIFramework.Extentions;
@@ -27,7 +27,8 @@ namespace CMI.WebApi.Classes
         {
             services.Add(new ServiceDescriptor(typeof(IInspectionGroupService), typeof(InspectionGroupService), ServiceLifetime.Scoped));
             services.Add(new ServiceDescriptor(typeof(IInspectionSubGroupService), typeof(InspectionSubGroupService), ServiceLifetime.Scoped));
-            // @#$(Auto Code Generator Part)-#001#
+            			services.Add(new ServiceDescriptor(typeof(ILevelByHatefService), typeof(LevelByHatefService), ServiceLifetime.Scoped));
+// @#$(Auto Code Generator Part)-#001#
         }
 
         private static void ConfigTools(IServiceCollection services)
