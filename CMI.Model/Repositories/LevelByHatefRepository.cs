@@ -19,6 +19,10 @@ namespace CMI.Model.Repositories
         public LevelByHatef? Get(long id) => EntityQueryable.SingleOrDefault(rd => rd.Id == id);
 
         public List<LevelByHatef> GetAll() => EntityQueryable.ToList();
+        public List<LevelByHatef> GetAllActivesBySearchTerms(string searchTerm)
+        {
+            return EntityQueryable.Where(x => x.Title.Contains(searchTerm)).OrderByDescending(x => x.Id).ToList();
+        }
 
         #endregion
     }

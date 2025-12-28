@@ -1,33 +1,36 @@
-namespace CMI.WebApi.Classes
+namespace CMI.WebApi.Classes;
+
+/// <summary>
+/// The Auto mapper configuration for input and output dto
+/// </summary>
+public class AutoMapperConfig : Profile
 {
+    // Events.
     /// <summary>
-    /// The Auto mapper configuration for input and output dto
+    /// Configures the request and resposne dtos
     /// </summary>
-    public class AutoMapperConfig : Profile
+    public AutoMapperConfig()
     {
-        // Events.
-        /// <summary>
-        /// Configures the request and resposne dtos
-        /// </summary>
-        public AutoMapperConfig()
-        {
-            #region Requests DTOs
+        #region Requests DTOs
 
-            CreateMap<InInspectionGroup, InspectionGroup>();
-            CreateMap<InInspectionSubGroup, InspectionSubGroup>();
-            			CreateMap<InLevelByHatef, LevelByHatef>();
-// @#$(Auto Code Generator Part)-#001#
+        CreateMap<InInspectionGroup, InspectionGroup>();
+        CreateMap<InInspectionSubGroup, InspectionSubGroup>();
+        CreateMap<InLevelByHatef, LevelByHatef>();
+        CreateMap<InStudent, Student>();
+        ;
+        // @#$(Auto Code Generator Part)-#001#
 
-            #endregion
+        #endregion
 
-            #region Response DTOs
+        #region Response DTOs
 
-            CreateMap<InspectionGroup, OutInspectionGroup>();
-            CreateMap<InspectionSubGroup, OutInspectionSubGroup>();
-            			CreateMap<LevelByHatef, OutLevelByHatef>();
-// @#$(Auto Code Generator Part)-#002#
+        CreateMap<InspectionGroup, OutInspectionGroup>();
+        CreateMap<InspectionSubGroup, OutInspectionSubGroup>();
+        CreateMap<LevelByHatef, OutLevelByHatef>();
+        CreateMap<Student, Dto.Response.OutStudent>().ForMember(x => x.FullName, d => d.MapFrom(x => $"{x.FirstName} {x.LastName}"));
+        ;
+        // @#$(Auto Code Generator Part)-#002#
 
-            #endregion
-        }
+        #endregion
     }
 }

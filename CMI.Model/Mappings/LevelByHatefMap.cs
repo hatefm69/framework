@@ -18,6 +18,7 @@ namespace CMI.Model.Mappings
                 builder.HasKey(pr => pr.Id);
 
                 // Foreign Keys.
+                builder.HasMany(pr => pr.Students).WithOne(pr => pr.Level).HasForeignKey(pr => pr.LevelId).OnDelete(DeleteBehavior.Restrict);
 
             };
         }

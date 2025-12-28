@@ -1,12 +1,12 @@
 namespace CMI.WebApi.Controllers;
 
 /// <summary>
-/// سطوح
+/// دانش آموز
 /// </summary>
 //[AuthenticationCheck]
 [Route("api/cmi/[controller]")]
 [ApiController]
-public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataContext, LevelByHatefRepository, ILevelByHatefService>
+public class StudentController : WebAPI_Controller<Student, CmiDataContext, StudentRepository, IStudentService>
 {
     // Variables. 
     private readonly IMapper _mapper;
@@ -17,7 +17,7 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
     /// </summary>
     /// <param name="service">The service object</param>
     /// <param name="mapper">The mapper object</param>
-    public LevelByHatefController(ILevelByHatefService service, IMapper mapper) : base(service, true)
+    public StudentController(IStudentService service, IMapper mapper) : base(service, true)
     {
         _mapper = mapper;
     }
@@ -38,7 +38,7 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
             var pageParams = gridSearchFilter.ConvertToFilterParams(15, 0);
             var records = Service.SearchRecords(pageParams);
 
-            return new ZimaSimpleGridData<OutLevelByHatef>
+            return new ZimaSimpleGridData<Model.Models.OutStudent>
             {
                 MetaData = new ZimaGridMetaData
                 {
@@ -46,24 +46,8 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
                     PageSize = pageParams.PageSize,
                     TotalCount = pageParams.TotalCount
                 },
-                Data = _mapper.Map<List<LevelByHatef>, List<OutLevelByHatef>>(records).ToArray()
+                Data = records.ToArray()
             };
-        }, usePureResponse: true);
-    }
-
-    /// <summary>
-    /// دریافت رکوردها برای اتو کامپلیت
-    /// </summary>
-    /// <returns></returns>
-    [HttpPost]
-    [Route("GetAllForAutoComplete")]
-    //[CustomAccessPermissionCheck(RolesProviderType = typeof(AdminRoles))]
-    public IActionResult GetAllForAutoComplete()
-    {
-        return ProcessJson(() =>
-        {
-            var inputData = Request.GetEncryptedData<ZimaAutoCompleteSearchFilter>();
-            return Service.GetAllForAutoComplete(inputData!.SearchTerm);
         }, usePureResponse: true);
     }
 
@@ -77,7 +61,24 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
     //[AccessPermissionCheck(Roles = new string[] { "admin" })]
     public IActionResult Get(long id)
     {
-        return ProcessJson(() => _mapper.Map<LevelByHatef?, OutLevelByHatef>(Service.Get(id)));
+        return ProcessJson(() => _mapper.Map<Student?, Dto.Response.OutStudent>(Service.Get(id)));
+    }
+
+    /// <summary>
+    /// حذف رکورد
+    /// </summary>
+    /// <param name="id">شناسه رکورد</param>
+    /// <returns></returns>
+    [HttpDelete]
+    [Route("Delete")]
+    //[AccessPermissionCheck(Roles = new string[] { "admin" })]
+    public IActionResult Delete()
+    {
+        return ProcessJson(() =>
+        {
+            var inputData = Request.GetAndValidateEncryptedData<InDelete>();
+            Service.Delete(inputData!.Id);
+        });
     }
 
     /// <summary>
@@ -91,8 +92,8 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
     {
         return ProcessJson(() =>
         {
-            var inputData = Request.GetAndValidateEncryptedData<InLevelByHatef>();
-            var entity = _mapper.Map<InLevelByHatef, LevelByHatef>(inputData);
+            var inputData = Request.GetAndValidateEncryptedData<InStudent>();
+            var entity = _mapper.Map<InStudent, Student>(inputData);
 
             //entity.Id = Guid.NewGuid();
             Service.AddRecord(entity);
@@ -110,26 +111,9 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
     {
         return ProcessJson(() =>
         {
-            var inputData = Request.GetAndValidateEncryptedData<InLevelByHatef>();
+            var inputData = Request.GetAndValidateEncryptedData<InStudent>();
 
-            Service.UpdateRecord(_mapper.Map<InLevelByHatef, LevelByHatef>(inputData));
-        });
-    }
-
-    /// <summary>
-    /// حذف رکورد
-    /// </summary>
-    /// <param name="id">شناسه رکورد</param>
-    /// <returns></returns>
-    [HttpDelete]
-    [Route("Delete")]
-    //[AccessPermissionCheck(Roles = new string[] { "admin" })]
-    public IActionResult Delete()
-    {
-        return ProcessJson(() =>
-        {
-            var inputData = Request.GetAndValidateEncryptedData<InDelete>();
-            Service.Delete(inputData!.Id);
+            Service.UpdateRecord(_mapper.Map<InStudent, Student>(inputData));
         });
     }
 }

@@ -8,5 +8,6 @@ namespace CMI.Service.Interfaces
         // Functions.
         void Delete(long id);
         LevelByHatef? Get(long id);
+        ZimaAutoCompleteItem[] GetAllForAutoComplete(string searchTerm);
     }
 }

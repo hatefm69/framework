@@ -39,7 +39,16 @@ namespace CMI.Service.Classes
                 throw new InformationException("داده ای با شناسه ارسالی پیدا نشد");
             return entity;
         }
-
+        public ZimaAutoCompleteItem[] GetAllForAutoComplete(string searchTerm)
+        {
+            var persons = EntityRepository.GetAllActivesBySearchTerms(searchTerm)
+                .Select(p => new ZimaAutoCompleteItem
+                {
+                    Value = p.Id.ToString(),
+                    Label = p.Title,
+                });
+            return persons.ToArray();
+        }
         #endregion
     }
 }
