@@ -2,6 +2,7 @@
 using CMI.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Oracle.EntityFrameworkCore.Metadata;
 
@@ -10,9 +11,11 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace CMI.Model.Migrations
 {
     [DbContext(typeof(CmiDataContext))]
-    partial class CmiDataContextModelSnapshot : ModelSnapshot
+    [Migration("20251228090311_cmi-003")]
+    partial class cmi003
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -280,10 +283,6 @@ namespace CMI.Model.Migrations
                         .HasColumnType("NVARCHAR2(15)")
                         .HasColumnName("CREATED_VIA");
 
-                    b.Property<long>("CityId")
-                        .HasColumnType("NUMBER(19)")
-                        .HasColumnName("CITY_ID");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -315,8 +314,6 @@ namespace CMI.Model.Migrations
                         .HasColumnName("LEVEL_ID");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CityId");
 
                     b.HasIndex("LevelId");
 
@@ -451,26 +448,13 @@ namespace CMI.Model.Migrations
 
             modelBuilder.Entity("CMI.Model.Entities.Student", b =>
                 {
-                    b.HasOne("CMI.Model.Entities.City", "City")
-                        .WithMany("Students")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CMI.Model.Entities.LevelByHatef", "Level")
                         .WithMany("Students")
                         .HasForeignKey("LevelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("City");
-
                     b.Navigation("Level");
-                });
-
-            modelBuilder.Entity("CMI.Model.Entities.City", b =>
-                {
-                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("CMI.Model.Entities.InspectionGroup", b =>

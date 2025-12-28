@@ -27,5 +27,6 @@ public class OutStudent
     public string FullName { get; set; }
 
     public string LevelTitle { get; set; }
+    public string CityTitle { get; set; }
 
 }

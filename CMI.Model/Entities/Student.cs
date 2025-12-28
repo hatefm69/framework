@@ -24,5 +24,6 @@ public class Student : Entity<long>
     /// پایه
     /// </summary>
     public LevelByHatef Level { get; set; }
-
+    public long CityId { get; set; }
+    public City City { get; set; }
 }

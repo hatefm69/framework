@@ -29,7 +29,8 @@ public class OutStudent
     /// <summary>
     /// پایه
     /// </summary>
-    public int LevelId { get; set; }
+    public long LevelId { get; set; }
     public string LevelTitle { get; set; }
-
+    public long CityId { get; set; }
+    public string CityTitle { get; set; }
 }

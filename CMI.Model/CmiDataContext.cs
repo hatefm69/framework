@@ -20,6 +20,8 @@ public class CmiDataContext : SQL_OracleDataContext
 
     public DbSet<Student> Students { get; set; }
 
+    public DbSet<City> Cities { get; set; }
+
     // @#$(Auto Code Generator Part)-#001#
     #endregion
 
@@ -46,6 +48,7 @@ public class CmiDataContext : SQL_OracleDataContext
         modelBuilder.HasSequence<long>("INSPECTION_TERM_CODE_SEQ").StartsAt(1);
         modelBuilder.ApplyConfiguration(new LevelByHatefMap());
         modelBuilder.ApplyConfiguration(new StudentMap());
+        modelBuilder.ApplyConfiguration(new CityMap());
         // @#$(Auto Code Generator Part)-#002#
         #endregion
     }

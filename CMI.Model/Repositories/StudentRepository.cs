@@ -29,7 +29,8 @@ public class StudentRepository : Repository<Student, CmiDataContext>
             FirstName = student.FirstName,
             LastName = student.LastName,
             LevelTitle = student.Level!.Title,
-            FullName = $"{student.FirstName} {student.LastName}"
+            FullName = $"{student.FirstName} {student.LastName}",
+            CityTitle = student.City.Title
         }).ToList();
     }
 

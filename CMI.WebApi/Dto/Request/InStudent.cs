@@ -29,5 +29,11 @@ public class InStudent : InputsValidator<InStudent>
     [Required(AllowEmptyStrings = false, ErrorMessage = "مقدار پایه را وارد نمایید")]
     [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار پایه صحیح نمی باشد")]
     public long LevelId { get; set; }
+    /// <summary>
+    /// پایه
+    /// </summary>
+    [Required(AllowEmptyStrings = false, ErrorMessage = "مقدار شهر را وارد نمایید")]
+    [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار شهر صحیح نمی باشد")]
+    public long CityId { get; set; }
 
 }
