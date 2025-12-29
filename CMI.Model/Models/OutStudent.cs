@@ -34,5 +34,5 @@ public class OutStudent
     public bool IsActive { get; set; }
     public long BirthDate { get; set; }
     public string BirthDateGorgianDate => BirthDate.ToGorgianDate();
-    public string BirthDatePersianDate => BirthDateGorgianDate.ToPersianWithSpliter();
+    public string BirthDatePersianDate => BirthDate.ToPersianWithSpliter();
 }

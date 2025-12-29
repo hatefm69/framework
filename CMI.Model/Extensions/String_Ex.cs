@@ -1,6 +1,4 @@
-﻿using FIS.Tools.Exceptions;
-
-namespace CMI.Model.Extensions
+﻿namespace CMI.Model.Extensions
 {
     public static class String_Ex
     {
@@ -26,36 +24,16 @@ namespace CMI.Model.Extensions
         {
             return string.IsNullOrEmpty(value);
         }
-        public static string ToPersianDate(this string value)
+        public static long ToPersianDate(this string value)
         {
-            if (string.IsNullOrEmpty(value))
-                return null;
-            if (DateTime.TryParse(value, out var result))
-                return new DateTimeParts().ConvertToPersianDate(result).Replace("/", string.Empty);
-            throw new InformationException("Date inputed is not valid!");
-        }
-        public static string ToGorgianDate(this string value)
-        {
-            if (string.IsNullOrEmpty(value))
-                return null;
-
-            var dtp = new DateTimeParts(value.ToLong(), DateTimeType.Persian)
+            var dtp = new DateTimeParts()
             {
-                DateSeprator = ""
+                DateSeprator = "-"
             };
 
-            return dtp.GetGregorianDateString();
-        }
-        public static string ToPersianWithSpliter(this string value)
-        {
-            if (string.IsNullOrEmpty(value))
-                return null;
-            var date = new DateTimeParts(value.ToLong(), DateTimeType.Gregorian).ToString();
-            if (DateTime.TryParse(date, out var result))
-                return new DateTimeParts().ConvertToPersianDate(result);
+            dtp.SetDateTime(value, DateTimeType.Gregorian);
 
-            throw new InformationException("Date inputed is not valid!");
-
+            return dtp.GetPersianDate();
         }
     }
 }

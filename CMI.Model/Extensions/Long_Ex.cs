@@ -16,19 +16,29 @@
             return $"{dateTime.ToString()!.Substring(0, 4)}/{dateTime.ToString()!.Substring(4, 2)}/{dateTime.ToString()!.Substring(6, 2)}";
         }
 
-        public static string ToShamsiDateWithoutSlash(this string shamsiDateWithSlash)
-        {
-            return shamsiDateWithSlash.Replace("/", "");
-        }
 
         public static string ToGorgianDate(this long value)
         {
-            var dtp = new DateTimeParts(value, DateTimeType.Persian)
+            var dtp = new DateTimeParts()
             {
-                DateSeprator = ""
+                DateSeprator = "-"
             };
 
+            dtp.SetDateTime(value, DateTimeType.Persian);
+
             return dtp.GetGregorianDateString();
+        }
+
+        public static string ToPersianWithSpliter(this long value)
+        {
+            var dtp = new DateTimeParts()
+            {
+                DateSeprator = "/"
+            };
+
+            dtp.SetDateTime(value, DateTimeType.Persian);
+
+            return dtp.GetDateString();
         }
     }
 }
