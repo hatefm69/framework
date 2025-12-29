@@ -16,10 +16,12 @@ public class StudentMap : EntityMap<Student>
             builder.Property(pr => pr.LastName).HasColumnName("LAST_NAME").IsRequired().HasMaxLength(50);
             builder.Property(pr => pr.LevelId).HasColumnName("LEVEL_ID").IsRequired();
             builder.Property(pr => pr.CityId).HasColumnName("CITY_ID").IsRequired();
+            builder.Property(pr => pr.IsActive).HasColumnName("IS_ACTIVE").IsRequired();
 
             // Indexes.
             builder.HasKey(pr => pr.Id);
 
+            // Foreign Keys.
 
         };
     }

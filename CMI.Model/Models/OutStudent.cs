@@ -28,5 +28,6 @@ public class OutStudent
 
     public string LevelTitle { get; set; }
     public string CityTitle { get; set; }
-
+    public string IsActiveStatus => IsActive ? "فعال" : "غیر فعال";
+    public bool IsActive { get; set; }
 }

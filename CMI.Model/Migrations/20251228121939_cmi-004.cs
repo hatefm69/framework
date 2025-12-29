@@ -10,12 +10,12 @@ namespace CMI.Model.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<long>(
-                name: "CITY_ID",
-                table: "STUDENT",
-                type: "NUMBER(19)",
-                nullable: false,
-                defaultValue: 0L);
+            //migrationBuilder.AddColumn<long>(
+            //    name: "CITY_ID",
+            //    table: "STUDENT",
+            //    type: "NUMBER(19)",
+            //    nullable: false,
+            //    defaultValue: 0L);
 
             migrationBuilder.CreateIndex(
                 name: "IX_STUDENT_CITY_ID",

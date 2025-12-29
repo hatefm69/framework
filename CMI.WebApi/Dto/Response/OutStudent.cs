@@ -31,6 +31,16 @@ public class OutStudent
     /// </summary>
     public long LevelId { get; set; }
     public string LevelTitle { get; set; }
+
+    /// <summary>
+    /// شهر
+    /// </summary>
     public long CityId { get; set; }
     public string CityTitle { get; set; }
+
+    /// <summary>
+    /// وضعیت
+    /// </summary>
+    public bool IsActive { get; set; }
+
 }

@@ -20,10 +20,16 @@ public class Student : Entity<long>
     /// پایه
     /// </summary>
     public long LevelId { get; set; }
+
     /// <summary>
-    /// پایه
+    /// شهر
     /// </summary>
-    public LevelByHatef Level { get; set; }
     public long CityId { get; set; }
+
+    /// <summary>
+    /// وضعیت
+    /// </summary>
+    public bool IsActive { get; set; }
+    public LevelByHatef Level { get; set; }
     public City City { get; set; }
 }
