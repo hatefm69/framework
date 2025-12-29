@@ -118,7 +118,7 @@ public class InspectionGroupService : BaseService<InspectionGroup, CmiDataContex
         base.AddRecord(entity);
         if (entity.IsActive == true)
             entity.DeactivationDate = null;
-        else entity.DeactivationDate = DateHelper.GetTodayDateShamsiWithoutSlash();
+        //else entity.DeactivationDate = DateHelper.GetTodayDateShamsiWithoutSlash();
         CommitDatabaseChanges();
         return entity.Id.ToString();
     }
@@ -136,10 +136,10 @@ public class InspectionGroupService : BaseService<InspectionGroup, CmiDataContex
             if (currentRecord!.IsActive == false) // در دیتابیس غیرفعال بوده است
                 entity.DeactivationDate = currentRecord.DeactivationDate;
             else // در دیتابیس فعال بوده است
-                entity.DeactivationDate = DateHelper.GetTodayDateShamsiWithoutSlash();
+                 //entity.DeactivationDate = DateHelper.GetTodayDateShamsiWithoutSlash();
 
-            // غیرفعال کردن زیر گروه های بازرسی مربوطه
-            GetService<InspectionSubGroup, InspectionSubGroupRepository, InspectionSubGroupService>().DeActiveByInspectionGroupId(entity.Id);
+                // غیرفعال کردن زیر گروه های بازرسی مربوطه
+                GetService<InspectionSubGroup, InspectionSubGroupRepository, InspectionSubGroupService>().DeActiveByInspectionGroupId(entity.Id);
         }
 
         base.UpdateRecord(entity);

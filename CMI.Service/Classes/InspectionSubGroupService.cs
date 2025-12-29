@@ -57,7 +57,7 @@ public class InspectionSubGroupService : BaseService<InspectionSubGroup, CmiData
         base.AddRecord(entity);
         if (entity.IsActive == true)
             entity.DeactivationDate = null;
-        else entity.DeactivationDate = DateHelper.GetTodayDateShamsiWithoutSlash();
+        //else entity.DeactivationDate = DateHelper.GetTodayDateShamsiWithoutSlash();
         CommitDatabaseChanges();
         return entity.Id.ToString();
     }
@@ -79,7 +79,7 @@ public class InspectionSubGroupService : BaseService<InspectionSubGroup, CmiData
 
         if (entity.IsActive == true)
             entity.DeactivationDate = null;
-        else entity.DeactivationDate = DateHelper.GetTodayDateShamsiWithoutSlash();
+        //else entity.DeactivationDate = DateHelper.GetTodayDateShamsiWithoutSlash();
         base.UpdateRecord(entity);
     }
 
@@ -89,7 +89,7 @@ public class InspectionSubGroupService : BaseService<InspectionSubGroup, CmiData
         foreach (var subGroup in subGroups)
         {
             subGroup.IsActive = false;
-            subGroup.DeactivationDate = DateHelper.GetTodayDateShamsiWithoutSlash();
+            //subGroup.DeactivationDate = DateHelper.GetTodayDateShamsiWithoutSlash();
             base.UpdateRecord(subGroup);
         }
     }

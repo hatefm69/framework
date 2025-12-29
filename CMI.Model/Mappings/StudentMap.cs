@@ -17,6 +17,7 @@ public class StudentMap : EntityMap<Student>
             builder.Property(pr => pr.LevelId).HasColumnName("LEVEL_ID").IsRequired();
             builder.Property(pr => pr.CityId).HasColumnName("CITY_ID").IsRequired();
             builder.Property(pr => pr.IsActive).HasColumnName("IS_ACTIVE").IsRequired();
+            builder.Property(pr => pr.BirthDate).HasColumnName("BIRTH_DATE").IsRequired();
 
             // Indexes.
             builder.HasKey(pr => pr.Id);

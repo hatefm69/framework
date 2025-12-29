@@ -41,6 +41,12 @@ public class InStudent : InputsValidator<InStudent>
     /// وضعیت
     /// </summary>
     [Required(ErrorMessage = "وضعیت را وارد نمایید")]
-    public bool IsActive { get; set; }
+    public bool? IsActive { get; set; }
+
+    /// <summary>
+    /// تاریخ تولد
+    /// </summary>
+    [Required(AllowEmptyStrings = false, ErrorMessage = "تاریخ تولد را وارد نمایید")]
+    public string BirthDate { get; set; }
 
 }

@@ -16,7 +16,7 @@ public class StudentRepository : Repository<Student, CmiDataContext>
 
     #region Public Functions.
 
-    public Student? Get(long id) => EntityQueryable.Include(x => x.Level).SingleOrDefault(rd => rd.Id == id);
+    public Student? Get(long id) => EntityQueryable.Include(x => x.Level).Include(x => x.City).SingleOrDefault(rd => rd.Id == id);
 
     public List<Student> GetAll() => EntityQueryable.ToList();
     public List<OutStudent> SearchRecords(PageParams pageParams)
@@ -32,6 +32,7 @@ public class StudentRepository : Repository<Student, CmiDataContext>
             FullName = $"{student.FirstName} {student.LastName}",
             CityTitle = student.City.Title,
             IsActive = student.IsActive,
+            BirthDate = student.BirthDate
         }).ToList();
     }
 

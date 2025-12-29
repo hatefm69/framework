@@ -22,25 +22,23 @@ public class OutStudent
     public string LastName { get; set; }
 
     /// <summary>
-    /// نام کامل
-    /// </summary>
-    public string FullName { get; set; }
-
-    /// <summary>
     /// پایه
     /// </summary>
     public long LevelId { get; set; }
     public string LevelTitle { get; set; }
-
     /// <summary>
     /// شهر
     /// </summary>
     public long CityId { get; set; }
-    public string CityTitle { get; set; }
 
     /// <summary>
     /// وضعیت
     /// </summary>
     public bool IsActive { get; set; }
 
+    /// <summary>
+    /// تاریخ تولد
+    /// </summary>
+    public string BirthDate { get; set; }
+    public string FullName { get; set; }
 }

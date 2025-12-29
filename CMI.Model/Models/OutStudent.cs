@@ -1,3 +1,5 @@
+using CMI.Model.Extensions;
+
 namespace CMI.Model.Models;
 
 /// <summary>
@@ -30,4 +32,7 @@ public class OutStudent
     public string CityTitle { get; set; }
     public string IsActiveStatus => IsActive ? "فعال" : "غیر فعال";
     public bool IsActive { get; set; }
+    public long BirthDate { get; set; }
+    public string BirthDateGorgianDate => BirthDate.ToGorgianDate();
+    public string BirthDatePersianDate => BirthDateGorgianDate.ToPersianWithSpliter();
 }

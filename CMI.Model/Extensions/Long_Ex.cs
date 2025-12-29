@@ -20,5 +20,15 @@
         {
             return shamsiDateWithSlash.Replace("/", "");
         }
+
+        public static string ToGorgianDate(this long value)
+        {
+            var dtp = new DateTimeParts(value, DateTimeType.Persian)
+            {
+                DateSeprator = ""
+            };
+
+            return dtp.GetGregorianDateString();
+        }
     }
 }

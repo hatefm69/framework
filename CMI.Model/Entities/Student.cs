@@ -30,6 +30,11 @@ public class Student : Entity<long>
     /// وضعیت
     /// </summary>
     public bool IsActive { get; set; }
+
+    /// <summary>
+    /// تاریخ تولد
+    /// </summary>
+    public long BirthDate { get; set; }
     public LevelByHatef Level { get; set; }
     public City City { get; set; }
 }
