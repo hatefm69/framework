@@ -22,6 +22,8 @@ public class CmiDataContext : SQL_OracleDataContext
 
     public DbSet<City> Cities { get; set; }
 
+    public DbSet<FamilyRelationship> FamilyRelationships { get; set; }
+
     // @#$(Auto Code Generator Part)-#001#
     #endregion
 
@@ -49,6 +51,7 @@ public class CmiDataContext : SQL_OracleDataContext
         modelBuilder.ApplyConfiguration(new LevelByHatefMap());
         modelBuilder.ApplyConfiguration(new StudentMap());
         modelBuilder.ApplyConfiguration(new CityMap());
+        modelBuilder.ApplyConfiguration(new FamilyRelationshipMap());
         // @#$(Auto Code Generator Part)-#002#
         #endregion
     }

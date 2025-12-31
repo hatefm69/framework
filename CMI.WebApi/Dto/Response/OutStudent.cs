@@ -41,4 +41,5 @@ public class OutStudent
     /// </summary>
     public string BirthDate { get; set; }
     public string FullName { get; set; }
+    public ZimaTableColumn[][]? familyRelationshipsTableData { get; set; }
 }

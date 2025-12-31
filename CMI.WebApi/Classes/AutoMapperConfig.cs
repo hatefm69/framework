@@ -22,6 +22,9 @@ public class AutoMapperConfig : Profile
             ;
         ;
         CreateMap<InCity, City>();
+        CreateMap<InFamilyRelationship, FamilyRelationship>()
+            .ForMember(x => x.FullName, d => d.MapFrom(x => x.familyRelationshipfullName));
+        ;
         // @#$(Auto Code Generator Part)-#001#
 
         #endregion
@@ -34,9 +37,17 @@ public class AutoMapperConfig : Profile
         CreateMap<Student, Dto.Response.OutStudent>()
             .ForMember(x => x.FullName, d => d.MapFrom(x => $"{x.FirstName} {x.LastName}"))
             .ForMember(x => x.BirthDate, d => d.MapFrom(x => x.BirthDate.ToGorgianDate()))
-            ;
-        ;
+            .ForMember(x => x.familyRelationshipsTableData, d => d.MapFrom(x => x.FamilyRelationships.ToList()
+            .Select(x => new ZimaTableColumn[]
+            {
+                 new() { Value = x.FullName.ToString() , Name = "familyRelationshipfullName" },
+                new (){Value=x.FamilyRelationshipId.ToString(),Name="familyRelationshipId"},
+                 new() { Value = ((FamilyRelationshipEnum) x.FamilyRelationshipId).GetDescription() , Name = "familyRelationshipTitle" },
+            })));
+
         CreateMap<City, OutCity>();
+        CreateMap<FamilyRelationship, OutFamilyRelationship>();
+
         // @#$(Auto Code Generator Part)-#002#
 
         #endregion

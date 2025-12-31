@@ -18,10 +18,15 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
     public Student? Get(long id)
     {
         var entity = EntityRepository.Get(id);
-
         if (entity == null)
             throw new InformationException("داده ای با شناسه ارسالی پیدا نشد");
         return entity;
+    }
+
+    public override void UpdateRecord(Student entity)
+    {
+        GetService<FamilyRelationship, FamilyRelationshipRepository, FamilyRelationshipService>().DeleteRange(entity.Id);
+        base.UpdateRecord(entity);
     }
 
     public List<OutStudent> SearchRecords(PageParams pageParams, ExpressionBindType expressionBindType = ExpressionBindType.AndAlso)

@@ -23,6 +23,7 @@ public class StudentMap : EntityMap<Student>
             builder.HasKey(pr => pr.Id);
 
             // Foreign Keys.
+            builder.HasMany(pr => pr.FamilyRelationships).WithOne(pr => pr.Student).HasForeignKey(pr => pr.StudentId).OnDelete(DeleteBehavior.Restrict);
 
         };
     }

@@ -16,7 +16,11 @@ public class StudentRepository : Repository<Student, CmiDataContext>
 
     #region Public Functions.
 
-    public Student? Get(long id) => EntityQueryable.Include(x => x.Level).Include(x => x.City).SingleOrDefault(rd => rd.Id == id);
+    public Student? Get(long id) => EntityQueryable
+        .Include(x => x.Level)
+        .Include(x => x.City)
+        .Include(x => x.FamilyRelationships)
+        .SingleOrDefault(rd => rd.Id == id);
 
     public List<Student> GetAll() => EntityQueryable.ToList();
     public List<OutStudent> SearchRecords(PageParams pageParams)

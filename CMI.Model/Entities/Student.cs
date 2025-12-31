@@ -37,4 +37,6 @@ public class Student : Entity<long>
     public long BirthDate { get; set; }
     public LevelByHatef Level { get; set; }
     public City City { get; set; }
+    public ICollection<FamilyRelationship> FamilyRelationships { get; set; }
+
 }
