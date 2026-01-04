@@ -25,6 +25,28 @@ public class StudentMap : EntityMap<Student>
             // Foreign Keys.
             builder.HasMany(pr => pr.FamilyRelationships).WithOne(pr => pr.Student).HasForeignKey(pr => pr.StudentId).OnDelete(DeleteBehavior.Restrict);
 
+
+
+            builder.OwnsMany(builder => builder.EducationalQualification, nc =>
+            {
+                nc.ToTable("STUDENT_EDUCATIONAL_QUALIFICATION");
+
+                nc.WithOwner()
+                .HasForeignKey(x => x.StudentId);
+
+                nc.Property<long>("ID");
+                nc.HasKey("ID");
+                nc.Property(p => p.Educational)
+                   .HasColumnName("EDUCATIONAL")
+                   .IsRequired()
+                   .HasMaxLength(100);
+                nc.OwnsOne(nc => nc.Score, score =>
+                {
+                    score.Property(p => p.Value)
+                   .HasColumnName("EDUCATIONAL_SCORE");
+                });
+            });
+
         };
     }
 }

@@ -20,6 +20,7 @@ public class StudentRepository : Repository<Student, CmiDataContext>
         .Include(x => x.Level)
         .Include(x => x.City)
         .Include(x => x.FamilyRelationships)
+        .Include(x => x.EducationalQualification)
         .SingleOrDefault(rd => rd.Id == id);
 
     public List<Student> GetAll() => EntityQueryable.ToList();

@@ -41,4 +41,9 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
         if (entity == null) return;
         EntityRepository.Remove(entity);
     }
+    public override void AddRecord(Student entity)
+    {
+        entity.AddEducationalQualification("پیش دبستانی", new Score(0));
+        base.AddRecord(entity);
+    }
 }

@@ -38,5 +38,10 @@ public class Student : Entity<long>
     public LevelByHatef Level { get; set; }
     public City City { get; set; }
     public ICollection<FamilyRelationship> FamilyRelationships { get; set; }
+    public ICollection<EducationalQualification> EducationalQualification { get; set; }
+    public void AddEducationalQualification(string educational, Score score)
+    {
+        EducationalQualification.Add(new EducationalQualification(educational, score));
+    }
 
 }
