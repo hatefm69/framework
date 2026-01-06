@@ -31,7 +31,8 @@ public static class ServicesConfig
         services.Add(new ServiceDescriptor(typeof(IStudentService), typeof(StudentService), ServiceLifetime.Scoped));
         services.Add(new ServiceDescriptor(typeof(ICityService), typeof(CityService), ServiceLifetime.Scoped));
         services.Add(new ServiceDescriptor(typeof(IFamilyRelationshipService), typeof(FamilyRelationshipService), ServiceLifetime.Scoped));
-        // @#$(Auto Code Generator Part)-#001#
+        			services.Add(new ServiceDescriptor(typeof(IAttachmentService), typeof(AttachmentService), ServiceLifetime.Scoped));
+// @#$(Auto Code Generator Part)-#001#
     }
 
     private static void ConfigTools(IServiceCollection services)

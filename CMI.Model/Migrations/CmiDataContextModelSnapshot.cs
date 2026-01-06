@@ -23,6 +23,69 @@ namespace CMI.Model.Migrations
 
             modelBuilder.HasSequence("INSPECTION_TERM_CODE_SEQ");
 
+            modelBuilder.Entity("CMI.Model.Entities.Attachment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CREATED_AT")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("CREATED_AT");
+
+                    b.Property<string>("CREATED_BY")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("NVARCHAR2(64)")
+                        .HasColumnName("CREATED_BY");
+
+                    b.Property<string>("CREATED_VIA")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("NVARCHAR2(15)")
+                        .HasColumnName("CREATED_VIA");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)")
+                        .HasColumnName("FILENAME");
+
+                    b.Property<long?>("LAST_EDITED_AT")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("LAST_EDITED_AT");
+
+                    b.Property<string>("LAST_EDITED_VIA")
+                        .HasMaxLength(15)
+                        .HasColumnType("NVARCHAR2(15)")
+                        .HasColumnName("LAST_EDITED_VIA");
+
+                    b.Property<string>("LAST_EDITOR_BY")
+                        .HasMaxLength(64)
+                        .HasColumnType("NVARCHAR2(64)")
+                        .HasColumnName("LAST_EDITOR_BY");
+
+                    b.Property<long>("RecordId")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("RECORD_ID");
+
+                    b.Property<string>("SanaId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("NVARCHAR2(36)")
+                        .HasColumnName("SANA_ID");
+
+                    b.Property<int>("TableId")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("TABLE_ID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ATTACHMENT", (string)null);
+                });
+
             modelBuilder.Entity("CMI.Model.Entities.City", b =>
                 {
                     b.Property<long>("Id")
@@ -318,11 +381,8 @@ namespace CMI.Model.Migrations
             modelBuilder.Entity("CMI.Model.Entities.Student", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(19)")
                         .HasColumnName("ID");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("BirthDate")
                         .HasColumnType("NUMBER(19)")

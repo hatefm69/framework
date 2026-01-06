@@ -33,6 +33,7 @@ namespace CMI.Service.HelperClasses
         {
             var sana = Sana.Instance;
 
+            sana.AppName = CmiDataContext.AppName;
             sana.IgnoreCustomCertifacateValidation = IsDevelopmentMode || IgnoreSSL;
             return sana;
         }

@@ -73,9 +73,13 @@
         "Afra_City_FindByName": "service/city/FindByName",
         "Afra_City_FindByProvinceCode": "service/city/FindByProvinceCode",
 
-        "Sana_Url": "https://saanaa.omidtech.co"
+        //"Sana_Url": "https://saanaa.omidtech.co",
         // "CMI_Sana_UserName": "cmi",
         // "CMI_Sana_Password": "qaz@123"
+        "Sana_Url": "https://saanaa.omidtech.co",
+        "CMI_Sana_UserName": "iau",
+        "CMI_Sana_Password": "qaz@123"
+
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5138"

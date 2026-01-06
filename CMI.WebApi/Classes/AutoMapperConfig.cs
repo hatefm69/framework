@@ -25,7 +25,8 @@ public class AutoMapperConfig : Profile
         CreateMap<InFamilyRelationship, FamilyRelationship>()
             .ForMember(x => x.FullName, d => d.MapFrom(x => x.familyRelationshipfullName));
         ;
-        // @#$(Auto Code Generator Part)-#001#
+        			CreateMap<InAttachment, Attachment>();
+// @#$(Auto Code Generator Part)-#001#
 
         #endregion
 
@@ -48,7 +49,8 @@ public class AutoMapperConfig : Profile
         CreateMap<City, OutCity>();
         CreateMap<FamilyRelationship, OutFamilyRelationship>();
 
-        // @#$(Auto Code Generator Part)-#002#
+        			CreateMap<Attachment, OutAttachment>();
+// @#$(Auto Code Generator Part)-#002#
 
         #endregion
     }

@@ -11,8 +11,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace CMI.Model.Migrations
 {
     [DbContext(typeof(CmiDataContext))]
-    [Migration("20251228090311_cmi-003")]
-    partial class cmi003
+    [Migration("20260106051543_cmi-001")]
+    partial class cmi001
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,69 @@ namespace CMI.Model.Migrations
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.HasSequence("INSPECTION_TERM_CODE_SEQ");
+
+            modelBuilder.Entity("CMI.Model.Entities.Attachment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CREATED_AT")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("CREATED_AT");
+
+                    b.Property<string>("CREATED_BY")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("NVARCHAR2(64)")
+                        .HasColumnName("CREATED_BY");
+
+                    b.Property<string>("CREATED_VIA")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("NVARCHAR2(15)")
+                        .HasColumnName("CREATED_VIA");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)")
+                        .HasColumnName("FILENAME");
+
+                    b.Property<long?>("LAST_EDITED_AT")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("LAST_EDITED_AT");
+
+                    b.Property<string>("LAST_EDITED_VIA")
+                        .HasMaxLength(15)
+                        .HasColumnType("NVARCHAR2(15)")
+                        .HasColumnName("LAST_EDITED_VIA");
+
+                    b.Property<string>("LAST_EDITOR_BY")
+                        .HasMaxLength(64)
+                        .HasColumnType("NVARCHAR2(64)")
+                        .HasColumnName("LAST_EDITOR_BY");
+
+                    b.Property<long>("RecordId")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("RECORD_ID");
+
+                    b.Property<string>("SanaId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("NVARCHAR2(36)")
+                        .HasColumnName("SANA_ID");
+
+                    b.Property<int>("TableId")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("TABLE_ID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ATTACHMENT", (string)null);
+                });
 
             modelBuilder.Entity("CMI.Model.Entities.City", b =>
                 {
@@ -74,6 +137,66 @@ namespace CMI.Model.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CITY", (string)null);
+                });
+
+            modelBuilder.Entity("CMI.Model.Entities.FamilyRelationship", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("ID");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CREATED_AT")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("CREATED_AT");
+
+                    b.Property<string>("CREATED_BY")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("NVARCHAR2(64)")
+                        .HasColumnName("CREATED_BY");
+
+                    b.Property<string>("CREATED_VIA")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("NVARCHAR2(15)")
+                        .HasColumnName("CREATED_VIA");
+
+                    b.Property<int>("FamilyRelationshipId")
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("FAMILY_RELATIONSHIP_ID");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)")
+                        .HasColumnName("FULL_NAME");
+
+                    b.Property<long?>("LAST_EDITED_AT")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("LAST_EDITED_AT");
+
+                    b.Property<string>("LAST_EDITED_VIA")
+                        .HasMaxLength(15)
+                        .HasColumnType("NVARCHAR2(15)")
+                        .HasColumnName("LAST_EDITED_VIA");
+
+                    b.Property<string>("LAST_EDITOR_BY")
+                        .HasMaxLength(64)
+                        .HasColumnType("NVARCHAR2(64)")
+                        .HasColumnName("LAST_EDITOR_BY");
+
+                    b.Property<long>("StudentId")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("STUDENT_ID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("FAMILY_RELATIONSHIP", (string)null);
                 });
 
             modelBuilder.Entity("CMI.Model.Entities.InspectionGroup", b =>
@@ -261,11 +384,12 @@ namespace CMI.Model.Migrations
             modelBuilder.Entity("CMI.Model.Entities.Student", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(19)")
                         .HasColumnName("ID");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    b.Property<long>("BirthDate")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("BIRTH_DATE");
 
                     b.Property<long>("CREATED_AT")
                         .HasColumnType("NUMBER(19)")
@@ -283,11 +407,19 @@ namespace CMI.Model.Migrations
                         .HasColumnType("NVARCHAR2(15)")
                         .HasColumnName("CREATED_VIA");
 
+                    b.Property<long>("CityId")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("CITY_ID");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("NVARCHAR2(50)")
                         .HasColumnName("FIRST_NAME");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("NUMBER(1)")
+                        .HasColumnName("IS_ACTIVE");
 
                     b.Property<long?>("LAST_EDITED_AT")
                         .HasColumnType("NUMBER(19)")
@@ -314,6 +446,8 @@ namespace CMI.Model.Migrations
                         .HasColumnName("LEVEL_ID");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("LevelId");
 
@@ -435,6 +569,17 @@ namespace CMI.Model.Migrations
                     b.ToTable("LOG", (string)null);
                 });
 
+            modelBuilder.Entity("CMI.Model.Entities.FamilyRelationship", b =>
+                {
+                    b.HasOne("CMI.Model.Entities.Student", "Student")
+                        .WithMany("FamilyRelationships")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("CMI.Model.Entities.InspectionSubGroup", b =>
                 {
                     b.HasOne("CMI.Model.Entities.InspectionGroup", "InspectionGroup")
@@ -448,13 +593,75 @@ namespace CMI.Model.Migrations
 
             modelBuilder.Entity("CMI.Model.Entities.Student", b =>
                 {
+                    b.HasOne("CMI.Model.Entities.City", "City")
+                        .WithMany("Students")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("CMI.Model.Entities.LevelByHatef", "Level")
                         .WithMany("Students")
                         .HasForeignKey("LevelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.OwnsMany("CMI.Model.Entities.EducationalQualification", "EducationalQualification", b1 =>
+                        {
+                            b1.Property<long>("ID")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("NUMBER(19)");
+
+                            OraclePropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("ID"));
+
+                            b1.Property<string>("Educational")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("NVARCHAR2(100)")
+                                .HasColumnName("EDUCATIONAL");
+
+                            b1.Property<long>("StudentId")
+                                .HasColumnType("NUMBER(19)");
+
+                            b1.HasKey("ID");
+
+                            b1.HasIndex("StudentId");
+
+                            b1.ToTable("STUDENT_EDUCATIONAL_QUALIFICATION", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("StudentId");
+
+                            b1.OwnsOne("CMI.Model.Entities.Score", "Score", b2 =>
+                                {
+                                    b2.Property<long>("EducationalQualificationID")
+                                        .HasColumnType("NUMBER(19)");
+
+                                    b2.Property<float>("Value")
+                                        .HasColumnType("BINARY_FLOAT")
+                                        .HasColumnName("EDUCATIONAL_SCORE");
+
+                                    b2.HasKey("EducationalQualificationID");
+
+                                    b2.ToTable("STUDENT_EDUCATIONAL_QUALIFICATION");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("EducationalQualificationID");
+                                });
+
+                            b1.Navigation("Score")
+                                .IsRequired();
+                        });
+
+                    b.Navigation("City");
+
+                    b.Navigation("EducationalQualification");
+
                     b.Navigation("Level");
+                });
+
+            modelBuilder.Entity("CMI.Model.Entities.City", b =>
+                {
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("CMI.Model.Entities.InspectionGroup", b =>
@@ -465,6 +672,11 @@ namespace CMI.Model.Migrations
             modelBuilder.Entity("CMI.Model.Entities.LevelByHatef", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("CMI.Model.Entities.Student", b =>
+                {
+                    b.Navigation("FamilyRelationships");
                 });
 #pragma warning restore 612, 618
         }

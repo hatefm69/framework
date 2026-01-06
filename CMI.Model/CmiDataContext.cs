@@ -24,6 +24,8 @@ public class CmiDataContext : SQL_OracleDataContext
 
     public DbSet<FamilyRelationship> FamilyRelationships { get; set; }
 
+    public DbSet<Attachment> Attachments { get; set; }
+
     // @#$(Auto Code Generator Part)-#001#
     #endregion
 
@@ -52,7 +54,15 @@ public class CmiDataContext : SQL_OracleDataContext
         modelBuilder.ApplyConfiguration(new StudentMap());
         modelBuilder.ApplyConfiguration(new CityMap());
         modelBuilder.ApplyConfiguration(new FamilyRelationshipMap());
+        modelBuilder.ApplyConfiguration(new AttachmentMap());
         // @#$(Auto Code Generator Part)-#002#
         #endregion
     }
+
+    public long? Next_SEQ()
+    {
+        return Database.SqlQuery<long?>($"SELECT INSPECTION_TERM_CODE_SEQ.NEXTVAL FROM dual").AsEnumerable().FirstOrDefault();
+
+    }
+
 }

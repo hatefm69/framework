@@ -61,7 +61,15 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
     //[AccessPermissionCheck(Roles = new string[] { "admin" })]
     public IActionResult Get(long id)
     {
-        return ProcessJson(() => _mapper.Map<Student?, Dto.Response.OutStudent>(Service.Get(id)));
+        return ProcessJson(() => _mapper.Map<Student?, Dto.Response.OutStudent>(Service.Get(id)), usePureResponse: true);
+    }
+
+    [HttpGet]
+    [Route("GetWithAttachment/{id:long:min(1)}")]
+    //[AccessPermissionCheck(Roles = new string[] { "admin" })]
+    public IActionResult GetWithAttachment(long id)
+    {
+        return ProcessJson(() => _mapper.Map<StudentWithAttachment?, OutStudentWithAttachment>(Service.GetWithAttachment(id)));
     }
 
     /// <summary>
@@ -92,11 +100,20 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
     {
         return ProcessJson(() =>
         {
-            var inputData = Request.GetAndValidateEncryptedData<InStudent>();
-            var entity = _mapper.Map<InStudent, Student>(inputData);
+            if (Request.IsContentJson())
+            {
+                var inputData = Request.GetAndValidateEncryptedData<InStudent>();
+                var entity = _mapper.Map<InStudent, Student>(inputData);
 
-            //entity.Id = Guid.NewGuid();
-            Service.AddRecord(entity);
+                Service.AddRecord(entity);
+            }
+            else
+            {
+                var inputData = Request.GetAndValidateEncryptedFilesData<InStudent>();
+                var entity = _mapper.Map<InStudent, Student>(inputData.Data);
+                Service.AddRecord(entity, inputData.Files);
+            }
+
         });
     }
 
@@ -109,11 +126,31 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
     //[AccessPermissionCheck(Roles = new string[] { "admin" })]
     public IActionResult Update()
     {
+        //return ProcessJson(() =>
+        //{
+        //    var inputData = Request.GetAndValidateEncryptedData<InStudent>();
+
+        //    Service.UpdateRecord(_mapper.Map<InStudent, Student>(inputData));
+        //});
+
+
         return ProcessJson(() =>
         {
-            var inputData = Request.GetAndValidateEncryptedData<InStudent>();
+            if (Request.IsContentJson())
+            {
+                var inputData = Request.GetAndValidateEncryptedData<InStudent>();
+                var entity = _mapper.Map<InStudent, Student>(inputData);
 
-            Service.UpdateRecord(_mapper.Map<InStudent, Student>(inputData));
+                Service.UpdateRecord(entity);
+            }
+            else
+            {
+                var inputData = Request.GetAndValidateEncryptedFilesData<InStudent>();
+                var entity = _mapper.Map<InStudent, Student>(inputData.Data);
+                Service.UpdateRecord(entity, inputData.Files);
+            }
+
         });
+
     }
 }

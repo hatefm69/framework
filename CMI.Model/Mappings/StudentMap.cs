@@ -11,7 +11,7 @@ public class StudentMap : EntityMap<Student>
         MappingConfigurations = (builder) =>
         {
             builder.ToTable("STUDENT");
-            builder.Property(pr => pr.Id).HasColumnName("ID").IsRequired();
+            builder.Property(pr => pr.Id).HasColumnName("ID").ValueGeneratedNever().IsRequired();
             builder.Property(pr => pr.FirstName).HasColumnName("FIRST_NAME").IsRequired().HasMaxLength(50);
             builder.Property(pr => pr.LastName).HasColumnName("LAST_NAME").IsRequired().HasMaxLength(50);
             builder.Property(pr => pr.LevelId).HasColumnName("LEVEL_ID").IsRequired();
@@ -22,10 +22,8 @@ public class StudentMap : EntityMap<Student>
             // Indexes.
             builder.HasKey(pr => pr.Id);
 
-            // Foreign Keys.
+            //Foreign Keys.
             builder.HasMany(pr => pr.FamilyRelationships).WithOne(pr => pr.Student).HasForeignKey(pr => pr.StudentId).OnDelete(DeleteBehavior.Restrict);
-
-
 
             builder.OwnsMany(builder => builder.EducationalQualification, nc =>
             {
@@ -40,6 +38,7 @@ public class StudentMap : EntityMap<Student>
                    .HasColumnName("EDUCATIONAL")
                    .IsRequired()
                    .HasMaxLength(100);
+
                 nc.OwnsOne(nc => nc.Score, score =>
                 {
                     score.Property(p => p.Value)

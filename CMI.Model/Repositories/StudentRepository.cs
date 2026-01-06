@@ -20,8 +20,32 @@ public class StudentRepository : Repository<Student, CmiDataContext>
         .Include(x => x.Level)
         .Include(x => x.City)
         .Include(x => x.FamilyRelationships)
-        .Include(x => x.EducationalQualification)
+        //.Include(x => x.EducationalQualification).Select(x => x)
         .SingleOrDefault(rd => rd.Id == id);
+    public StudentWithAttachment? GetWithAttachment(long id)
+    {
+        var attachmentRepoTBL = GetRepository<Attachment, AttachmentRepository>().EntityQueryable;
+        return EntityQueryable
+            .AsNoTracking()
+            .Include(x => x.Level)
+            .Include(x => x.City)
+            .Include(x => x.FamilyRelationships)
+            //.Include(x => x.EducationalQualification)
+            .Select(x => new StudentWithAttachment
+            {
+                Student = x,
+                Attachments = attachmentRepoTBL
+                .AsNoTracking()
+                .Where(x => x.RecordId == id)
+                .ToList()
+            })
+            .SingleOrDefault(rd => rd.Student.Id == id);
+
+    }
+    //return null;
+    //})
+
+
 
     public List<Student> GetAll() => EntityQueryable.ToList();
     public List<OutStudent> SearchRecords(PageParams pageParams)
