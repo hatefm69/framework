@@ -24,17 +24,22 @@
                 throw new InformationException("داده ای با شناسه ارسالی پیدا نشد");
             return entity;
         }
-        public Attachment? GetAttachment(long id, TableEnum tableEnum)
+        public List<Attachment> GetAttachment(long id, TableEnum tableEnum)
         {
-            var entity = EntityRepository.GetAttachment(id, tableEnum);
-            if (entity == null)
+            var entities = EntityRepository.GetAttachment(id, tableEnum);
+            if (entities == null)
                 throw new InformationException("داده ای با شناسه ارسالی پیدا نشد");
-            return entity;
+            return entities;
         }
 
         public void Delete(Attachment attachment)
         {
             EntityRepository.Remove(attachment);
+        }
+
+        public override List<Attachment> SearchRecords(PageParams pageParams, ExpressionBindType expressionBindType = ExpressionBindType.AndAlso)
+        {
+            return EntityRepository.SearchRecords(pageParams, long.Parse(pageParams.FilterParams.First().Value));
         }
         #endregion
 

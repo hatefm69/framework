@@ -9,6 +9,6 @@ namespace CMI.Service.Interfaces
     {
         void Delete(Attachment attachment);
         Attachment? GetAttachment(long id);
-        Attachment? GetAttachment(long id, TableEnum tableEnum);
+        List<Attachment>? GetAttachment(long id, TableEnum tableEnum);
     }
 }

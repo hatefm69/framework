@@ -1,3 +1,5 @@
+using FIS.Tools;
+
 namespace CMI.Service.Classes;
 
 /// <summary>
@@ -44,8 +46,8 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
         if (!(files == null || files.Count == 0))
         {
 
-            var sanaResult = SanaHelper.UploadFiles(files);
 
+            var sanaResult = SanaHelper.UploadFiles(files);
             base.UpdateRecord(entity);
 
             attachmentService.AddRecords(sanaResult.Select(x => new Attachment
@@ -81,23 +83,44 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
     }
     public void AddRecord(Student entity, IFormFileCollection files)
     {
-        //entity.AddEducationalQualification("پیش دبستانی", new Score(0));
         var attachmentService = GetService<Attachment, AttachmentRepository, AttachmentService>();
-        if (!(files == null || files.Count == 0))
+        var sanaFileInfo = new List<SanaFileInfo>();
+
+        Transaction.Begin(onTask: () =>
         {
-            var sanaResult = SanaHelper.UploadFiles(files);
-            entity.Id = _cmiDataContext.Next_SEQ().Value;
-            base.AddRecord(entity);
-
-            attachmentService.AddRecords(sanaResult.Select(x => new Attachment
+            if (!(files == null || files.Count == 0))
             {
-                FileName = x.Filename,
-                TableId = TableEnum.Student,
-                SanaId = x.Id,
-                RecordId = entity.Id
-            }).ToList());
+                sanaFileInfo = SanaHelper.UploadFiles(files);
 
-        }
+                entity.Id = _cmiDataContext.Next_SEQ().Value;
+                base.AddRecord(entity);
+
+                attachmentService.AddRecords(sanaFileInfo.Select(x => new Attachment
+                {
+                    FileName = x.Filename,
+                    TableId = TableEnum.Student,
+                    SanaId = x.Id,
+                    RecordId = entity.Id
+                }).ToList());
+
+            }
+        },
+        onCommit: () =>
+        {
+
+        },
+        onRollBack: (exception) =>
+        {
+            if (sanaFileInfo != null)
+            {
+                var sana = ExternalServices.GetSana();
+
+                sanaFileInfo.ForEach(file =>
+                {
+                    var result = sana.DeleteFile(CmiDataContext.AppName, file.Id);
+                });
+            }
+        });
 
     }
 }

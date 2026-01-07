@@ -20,7 +20,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="15.0.1" />
     <PackageReference Include="ClosedXML_Excel" Version="1.0.0" />
-    <PackageReference Include="FIS.ZarrirSecurity" Version="9.0.5" />
+    <PackageReference Include="FIS.ZarrirSecurity" Version="9.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

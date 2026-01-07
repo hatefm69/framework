@@ -19,9 +19,9 @@
     <PackageReference Include="FIS.DataStorageFramework" Version="9.0.1" />
     <PackageReference Include="FIS.Sana" Version="9.0.2" />
     <PackageReference Include="FIS.SQL_Oracle" Version="9.0.3" />
-    <PackageReference Include="FIS.Tools" Version="9.0.0" />
+    <PackageReference Include="FIS.Tools" Version="9.0.3" />
     <PackageReference Include="FIS.Utilities" Version="9.0.6" />
-    <PackageReference Include="FIS.ZarrirSecurity" Version="9.0.5" />
+    <PackageReference Include="FIS.ZarrirSecurity" Version="9.0.7" />
   </ItemGroup>
 
   <ItemGroup>
