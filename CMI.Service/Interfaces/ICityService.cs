@@ -1,4 +1,5 @@
 
+
 namespace CMI.Service.Interfaces;
 
 /// <summary>
@@ -10,4 +11,5 @@ public interface ICityService : IBaseService<City, CmiDataContext, CityRepositor
     void Delete(long id);
     City? Get(long id);
     ICollection<City> GetAll();
+    ZimaRemoteDropDownRecord[] GetAllCityRemoteDropdown();
 }

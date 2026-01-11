@@ -105,5 +105,18 @@ namespace CMI.WebApi.Controllers
                 Service.UpdateRecord(_mapper.Map<InCity, City>(inputData));
             });
         }
+        [HttpPost()]
+        [Route("GetAllCityRemoteDropDown")]
+        //[AccessPermissionCheck(Roles = new string[] { "admin" })]
+        public IActionResult GetAllCityRemoteDropDown()
+        {
+            return ProcessJson(() =>
+            {
+                var zimaRemoteDropDownItems = new List<ZimaRemoteDropDownItem>();
+                var list = Service.GetAllCityRemoteDropdown();
+                list = list.OrderBy(x => x.Name).ToArray();
+                return list;
+            }, usePureResponse: true);
+        }
     }
 }

@@ -1,3 +1,5 @@
+using CMI.Service.Classes;
+
 namespace CMI.WebApi.Controllers;
 
 /// <summary>
@@ -152,6 +154,32 @@ public class TeacherController : WebAPI_Controller<Teacher, CmiDataContext, Teac
 
         });
 
+    }
+    [HttpPost()]
+    [Route("GetListAttachments/{id}")]
+    public IActionResult GetList(long id)
+    {
+        return ProcessJson(() =>
+        {
+            var attachmentService = Service.GetService<Attachment, AttachmentRepository, AttachmentService>();
+            var gridSearchFilter = Request.GetEncryptedData<ZimeGridSearchFilter>();
+            var pageParams = gridSearchFilter.ConvertToFilterParams(15, 0);
+            pageParams.FilterParams = new();
+            pageParams.FilterParams.Add(new FIS.Tools.ORM_Helper.Models.FilterParam()
+            {
+                Value = id.ToString(),
+                Key = nameof(TableEnum.Teacher)
+            });
+
+            var records = attachmentService.SearchRecords(pageParams);
+
+            return records.Select(x => new ZimaTableColumn[]
+            {
+                    new() { Value = x.FileName.ToString() , Name= nameof(x.FileName).AsCamelCase() },
+                    new() { Value = x.Id.ToString() , Name = nameof(x.Id).AsCamelCase() },
+            }).ToList();
+
+        }, usePureResponse: true);
     }
 }
 

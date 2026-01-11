@@ -20,14 +20,15 @@ namespace CMI.Model.Repositories
         public Attachment GetAttachment(long id) => EntityQueryable.FirstOrDefault(x => x.Id == id);
         public List<Attachment> GetAttachment(long id, TableEnum tableEnum) => EntityQueryable.Where(x => x.RecordId == id && x.TableId == tableEnum).ToList();
         public List<Attachment> GetAttachments(long recordId) => EntityQueryable.Where(x => x.RecordId == recordId).ToList();
-        public List<Attachment> SearchRecords(PageParams pageParams, long studentId)
+        public List<Attachment> SearchRecords(PageParams pageParams, long studentId, TableEnum tableEnum)
         {
             var query = EntityQueryable.AsNoTracking()
-                .Where(x => x.TableId == TableEnum.Student && x.RecordId == studentId);
+                .Where(x => x.TableId == tableEnum && x.RecordId == studentId);
             return query.ToList();
             //pageParams.SortParams = new List<SortParam> { new SortParam { OrderBy = "id", SortOrder = "desc" } };
             //return FilterData(query, pageParams).ToList();
         }
+
         #endregion
     }
 }

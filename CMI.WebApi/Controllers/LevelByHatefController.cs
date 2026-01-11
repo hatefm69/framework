@@ -66,6 +66,19 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
             return Service.GetAllForAutoComplete(inputData!.SearchTerm);
         }, usePureResponse: true);
     }
+    [HttpPost()]
+    [Route("GetAllForLevelRemoteDropDown")]
+    //[AccessPermissionCheck(Roles = new string[] { "admin" })]
+    public IActionResult GetAllForLevelRemoteDropDown()
+    {
+        return ProcessJson(() =>
+        {
+            var zimaRemoteDropDownItems = new List<ZimaRemoteDropDownItem>();
+            var list = Service.GetAllForLevelRemoteDropDown();
+            list = list.OrderBy(x => x.Name).ToArray();
+            return list;
+        }, usePureResponse: true);
+    }
 
     /// <summary>
     /// دریافت اطلاعات رکورد

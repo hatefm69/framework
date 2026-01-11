@@ -41,5 +41,22 @@ public class CityService : BaseService<City, CmiDataContext, CityRepository>, IC
     }
     public ICollection<City> GetAll() => EntityRepository.GetAll();
 
+    public ZimaRemoteDropDownRecord[] GetAllCityRemoteDropdown()
+    {
+
+        var list = new List<ZimaRemoteDropDownRecord>();
+        var cityService = GetService<City, CityRepository, CityService>();
+        var cities = cityService.GetAll();
+        list.AddRange(new ZimaRemoteDropDownRecord
+        {
+            Name = "cityId",
+            Value = cities.Select(x => new ZimaDropDownItem
+            {
+                Label = x.Title,
+                Value = x.Id.ToString(),
+            }).ToArray()
+        });
+        return list.ToArray();
+    }
     #endregion
 }

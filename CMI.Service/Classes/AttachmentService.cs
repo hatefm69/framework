@@ -39,7 +39,10 @@
 
         public override List<Attachment> SearchRecords(PageParams pageParams, ExpressionBindType expressionBindType = ExpressionBindType.AndAlso)
         {
-            return EntityRepository.SearchRecords(pageParams, long.Parse(pageParams.FilterParams.First().Value));
+            var tableId = (TableEnum)Enum.Parse(typeof(TableEnum), pageParams.FilterParams.First().Key);
+
+            return EntityRepository.SearchRecords(pageParams, long.Parse(pageParams.FilterParams.First().Value),
+                tableId);
         }
         #endregion
 

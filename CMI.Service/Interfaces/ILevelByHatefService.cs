@@ -9,5 +9,6 @@ namespace CMI.Service.Interfaces
         void Delete(long id);
         LevelByHatef? Get(long id);
         ZimaAutoCompleteItem[] GetAllForAutoComplete(string searchTerm);
+        ZimaRemoteDropDownRecord[] GetAllForLevelRemoteDropDown();
     }
 }

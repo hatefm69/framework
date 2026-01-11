@@ -31,71 +31,7 @@ namespace CMI.WebApi.Controllers
         /// جستجوی در لیست
         /// </summary>
         /// <returns>برگشت اطلاعات جستجو</returns>
-        [HttpPost()]
-        [Route("GetList/{id}")]
-        //[AccessPermissionCheck(Roles = new string[] { "admin" })]
-        //public IActionResult Get(long id)
 
-        //[AccessPermissionCheck(Roles = new string[] { "admin" })]
-        public IActionResult GetList(long id)
-        {
-            return ProcessJson(() =>
-            {
-                var gridSearchFilter = Request.GetEncryptedData<ZimeGridSearchFilter>();
-                var pageParams = gridSearchFilter.ConvertToFilterParams(15, 0);
-                pageParams.FilterParams = new();
-                pageParams.FilterParams.Add(new FIS.Tools.ORM_Helper.Models.FilterParam()
-                {
-                    Value = id.ToString(),
-                    Key = nameof(TableEnum.Student)
-                });
-
-                var records = Service.SearchRecords(pageParams);
-
-                return records.Select(x => new ZimaTableColumn[]
-                {
-                    new() { Value = x.FileName.ToString() , Name= nameof(x.FileName).AsCamelCase() },
-                    new() { Value = x.Id.ToString() , Name = nameof(x.Id).AsCamelCase() },
-                }).ToList();
-
-            }, usePureResponse: true);
-        }
-
-        /// <summary>
-        /// ثبت اطلاعات
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("Post")]
-        //[AccessPermissionCheck(Roles = new string[] { "admin" })]
-        public IActionResult Post()
-        {
-            return ProcessJson(() =>
-            {
-                var inputData = Request.GetAndValidateEncryptedData<InAttachment>();
-                var entity = _mapper.Map<InAttachment, Attachment>(inputData);
-
-                //entity.Id = Guid.NewGuid();
-                Service.AddRecord(entity);
-            });
-        }
-
-        /// <summary>
-        /// ویرایش اطلاعات
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("Update")]
-        //[AccessPermissionCheck(Roles = new string[] { "admin" })]
-        public IActionResult Update()
-        {
-            return ProcessJson(() =>
-            {
-                var inputData = Request.GetAndValidateEncryptedData<InAttachment>();
-
-                Service.UpdateRecord(_mapper.Map<InAttachment, Attachment>(inputData));
-            });
-        }
         // downloads
         /// <summary>
         /// 

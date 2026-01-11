@@ -49,6 +49,24 @@ namespace CMI.Service.Classes
                 });
             return persons.ToArray();
         }
+        public ZimaRemoteDropDownRecord[] GetAllForLevelRemoteDropDown()
+        {
+
+            var list = new List<ZimaRemoteDropDownRecord>();
+
+            var levelbyhatefService = GetService<LevelByHatef, LevelByHatefRepository, LevelByHatefService>();
+            var levels = levelbyhatefService.GetAllForAutoComplete(string.Empty);
+            list.AddRange(new ZimaRemoteDropDownRecord
+            {
+                Name = "levelId",
+                Value = levels.Select(x => new ZimaDropDownItem
+                {
+                    Label = x.Label,
+                    Value = x.Value,
+                }).ToArray()
+            });
+            return list.ToArray();
+        }
         #endregion
     }
 }

@@ -84,7 +84,7 @@ public class TeacherRepository : Repository<Teacher, CmiDataContext>
             FullName = $"{teacher.FirstName} {teacher.LastName}",
             CityTitle = teacher.City.Title,
             IsActive = teacher.IsActive,
-            BirthDate = teacher.BirthDate
+            BirthDate = teacher.BirthDate,
         }).ToList();
     }
 
