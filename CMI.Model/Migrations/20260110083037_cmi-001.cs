@@ -201,14 +201,16 @@ namespace CMI.Model.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FAMILY_RELATIONSHIP",
+                name: "TEACHER",
                 columns: table => new
                 {
-                    ID = table.Column<long>(type: "NUMBER(19)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    STUDENT_ID = table.Column<long>(type: "NUMBER(19)", nullable: false),
-                    FAMILY_RELATIONSHIP_ID = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    FULL_NAME = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
+                    ID = table.Column<long>(type: "NUMBER(19)", nullable: false),
+                    FIRST_NAME = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
+                    LAST_NAME = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
+                    LEVEL_ID = table.Column<long>(type: "NUMBER(19)", nullable: false),
+                    CITY_ID = table.Column<long>(type: "NUMBER(19)", nullable: false),
+                    IS_ACTIVE = table.Column<bool>(type: "NUMBER(1)", nullable: false),
+                    BIRTH_DATE = table.Column<long>(type: "NUMBER(19)", nullable: false),
                     CREATED_AT = table.Column<long>(type: "NUMBER(19)", nullable: false),
                     CREATED_BY = table.Column<string>(type: "NVARCHAR2(64)", maxLength: 64, nullable: false),
                     CREATED_VIA = table.Column<string>(type: "NVARCHAR2(15)", maxLength: 15, nullable: false),
@@ -218,13 +220,19 @@ namespace CMI.Model.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FAMILY_RELATIONSHIP", x => x.ID);
+                    table.PrimaryKey("PK_TEACHER", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_FAMILY_RELATIONSHIP_STUDENT_STUDENT_ID",
-                        column: x => x.STUDENT_ID,
-                        principalTable: "STUDENT",
+                        name: "FK_TEACHER_CITY_CITY_ID",
+                        column: x => x.CITY_ID,
+                        principalTable: "CITY",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TEACHER_LEVEL_BY_HATEF_LEVEL_ID",
+                        column: x => x.LEVEL_ID,
+                        principalTable: "LEVEL_BY_HATEF",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,10 +256,49 @@ namespace CMI.Model.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FAMILY_RELATIONSHIP",
+                columns: table => new
+                {
+                    ID = table.Column<long>(type: "NUMBER(19)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    RecordId = table.Column<long>(type: "NUMBER(19)", nullable: false),
+                    TableId = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    FAMILY_RELATIONSHIP_ID = table.Column<int>(type: "NUMBER(10)", nullable: false),
+                    FULL_NAME = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
+                    CREATED_AT = table.Column<long>(type: "NUMBER(19)", nullable: false),
+                    CREATED_BY = table.Column<string>(type: "NVARCHAR2(64)", maxLength: 64, nullable: false),
+                    CREATED_VIA = table.Column<string>(type: "NVARCHAR2(15)", maxLength: 15, nullable: false),
+                    LAST_EDITED_AT = table.Column<long>(type: "NUMBER(19)", nullable: true),
+                    LAST_EDITED_VIA = table.Column<string>(type: "NVARCHAR2(15)", maxLength: 15, nullable: true),
+                    LAST_EDITOR_BY = table.Column<string>(type: "NVARCHAR2(64)", maxLength: 64, nullable: true),
+                    StudentId = table.Column<long>(type: "NUMBER(19)", nullable: true),
+                    TeacherId = table.Column<long>(type: "NUMBER(19)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FAMILY_RELATIONSHIP", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_FAMILY_RELATIONSHIP_STUDENT_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "STUDENT",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_FAMILY_RELATIONSHIP_TEACHER_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "TEACHER",
+                        principalColumn: "ID");
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_FAMILY_RELATIONSHIP_STUDENT_ID",
+                name: "IX_FAMILY_RELATIONSHIP_StudentId",
                 table: "FAMILY_RELATIONSHIP",
-                column: "STUDENT_ID");
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FAMILY_RELATIONSHIP_TeacherId",
+                table: "FAMILY_RELATIONSHIP",
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_INSPECTION_SUB_GROUP_INSPECTION_GROUP_ID",
@@ -272,6 +319,16 @@ namespace CMI.Model.Migrations
                 name: "IX_STUDENT_EDUCATIONAL_QUALIFICATION_StudentId",
                 table: "STUDENT_EDUCATIONAL_QUALIFICATION",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TEACHER_CITY_ID",
+                table: "TEACHER",
+                column: "CITY_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TEACHER_LEVEL_ID",
+                table: "TEACHER",
+                column: "LEVEL_ID");
         }
 
         /// <inheritdoc />
@@ -294,6 +351,9 @@ namespace CMI.Model.Migrations
 
             migrationBuilder.DropTable(
                 name: "STUDENT_EDUCATIONAL_QUALIFICATION");
+
+            migrationBuilder.DropTable(
+                name: "TEACHER");
 
             migrationBuilder.DropTable(
                 name: "INSPECTION_GROUP");

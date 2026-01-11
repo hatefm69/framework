@@ -1,14 +1,14 @@
 namespace CMI.Model.Repositories;
 
 /// <summary>
-/// دانش آموز
+/// معلم
 /// </summary>
-public class StudentRepository : Repository<Student, CmiDataContext>
+public class TeacherRepository : Repository<Teacher, CmiDataContext>
 {
     // Events.
-    public StudentRepository() { }
+    public TeacherRepository() { }
 
-    public StudentRepository(CmiDataContext dataContext, IServiceLocator entityLocator) : base(dataContext, entityLocator) { }
+    public TeacherRepository(CmiDataContext dataContext, IServiceLocator entityLocator) : base(dataContext, entityLocator) { }
 
     #region Private Functions.
 
@@ -16,15 +16,15 @@ public class StudentRepository : Repository<Student, CmiDataContext>
 
     #region Public Functions.
 
-    public StudentWithFamilyRelation? Get(long id)
+    public TeacherWithFamilyRelation? Get(long id)
     {
         var familyRepoTBL = GetRepository<FamilyRelationship, FamilyRelationshipRepository>().EntityQueryable;
         return EntityQueryable
         .Include(x => x.Level)
         .Include(x => x.City)
-        .Select(x => new StudentWithFamilyRelation
+        .Select(x => new TeacherWithFamilyRelation
         {
-            Student = x
+            Teacher = x
            ,
             FamilyRelationships
              = (familyRepoTBL
@@ -34,9 +34,9 @@ public class StudentRepository : Repository<Student, CmiDataContext>
         })
         //.Include(x => x.FamilyRelationships)
         //.Include(x => x.EducationalQualification).Select(x => x)
-        .SingleOrDefault(rd => rd.Student.Id == id);
+        .SingleOrDefault(rd => rd.Teacher.Id == id);
     }
-    public Student? GetPureStudent(long id)
+    public Teacher? GetPureTecher(long id)
     {
         var familyRepoTBL = GetRepository<FamilyRelationship, FamilyRelationshipRepository>().EntityQueryable;
         return EntityQueryable
@@ -46,7 +46,7 @@ public class StudentRepository : Repository<Student, CmiDataContext>
         //.Include(x => x.EducationalQualification).Select(x => x)
         .SingleOrDefault(rd => rd.Id == id);
     }
-    public StudentWithAttachment? GetWithAttachment(long id)
+    public TeacherWithAttachment? GetWithAttachment(long id)
     {
         var attachmentRepoTBL = GetRepository<Attachment, AttachmentRepository>().EntityQueryable;
         return EntityQueryable
@@ -54,15 +54,15 @@ public class StudentRepository : Repository<Student, CmiDataContext>
             .Include(x => x.Level)
             .Include(x => x.City)
             //.Include(x => x.EducationalQualification)
-            .Select(x => new StudentWithAttachment
+            .Select(x => new TeacherWithAttachment
             {
-                Student = x,
+                Teacher = x,
                 Attachments = attachmentRepoTBL
                 .AsNoTracking()
                 .Where(x => x.RecordId == id)
                 .ToList()
             })
-            .SingleOrDefault(rd => rd.Student.Id == id);
+            .SingleOrDefault(rd => rd.Teacher.Id == id);
 
     }
     //return null;
@@ -70,23 +70,24 @@ public class StudentRepository : Repository<Student, CmiDataContext>
 
 
 
-    public List<Student> GetAll() => EntityQueryable.ToList();
-    public List<OutStudent> SearchRecords(PageParams pageParams)
+    public List<Teacher> GetAll() => EntityQueryable.ToList();
+    public List<OutTeacher> SearchRecords(PageParams pageParams)
     {
-        var studentTbl = EntityQueryable.AsNoTracking();
+        var teacherTbl = EntityQueryable.AsNoTracking();
         pageParams.SortParams = new List<SortParam> { new() { OrderBy = "id", SortOrder = "desc" } };
-        return FilterData(pageParams).Select(student => new OutStudent
+        return FilterData(pageParams).Select(teacher => new OutTeacher
         {
-            Id = student.Id,
-            FirstName = student.FirstName,
-            LastName = student.LastName,
-            LevelTitle = student.Level!.Title,
-            FullName = $"{student.FirstName} {student.LastName}",
-            CityTitle = student.City.Title,
-            IsActive = student.IsActive,
-            BirthDate = student.BirthDate
+            Id = teacher.Id,
+            FirstName = teacher.FirstName,
+            LastName = teacher.LastName,
+            LevelTitle = teacher.Level!.Title,
+            FullName = $"{teacher.FirstName} {teacher.LastName}",
+            CityTitle = teacher.City.Title,
+            IsActive = teacher.IsActive,
+            BirthDate = teacher.BirthDate
         }).ToList();
     }
 
     #endregion
 }
+

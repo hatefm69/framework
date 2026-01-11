@@ -1,6 +1,6 @@
 namespace CMI.WebApi.Dto.Request;
 
-public class InStudent : InputsValidator<InStudent>
+public class InTeacher : InputsValidator<InTeacher>
 {
     // Properties.
     /// <summary>
@@ -87,3 +87,4 @@ public class InStudent : InputsValidator<InStudent>
         return true;
     }
 }
+

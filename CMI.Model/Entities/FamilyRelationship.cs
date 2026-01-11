@@ -9,9 +9,11 @@ public class FamilyRelationship : Entity<long>
     /// <summary>
     /// شناسه دانش آموز
     /// </summary>
-    public long StudentId { get; set; }
-    public Student Student { get; set; }
-
+    public long RecordId { get; set; }
+    public TableEnum TableId { get; set; }
+    // public Student Student { get; set; }
+    // public long TeacherId { get; set; }
+    // public Teacher Teacher { get; set; }
     /// <summary>
     /// شناسه نسبت
     /// </summary>

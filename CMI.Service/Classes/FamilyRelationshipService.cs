@@ -25,9 +25,9 @@ public class FamilyRelationshipService : BaseService<FamilyRelationship, CmiData
         if (entity == null) return;
         EntityRepository.Remove(entity);
     }
-    public void DeleteRange(long id)
+    public void DeleteRange(long id, TableEnum table)
     {
-        var familyRelationships = EntityRepository.GetByStudentId(id);
+        var familyRelationships = EntityRepository.GetByRecordById(id, table);
         EntityRepository.RemoveRange(familyRelationships);
     }
     public FamilyRelationship? Get(long id)

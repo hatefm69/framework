@@ -185,13 +185,23 @@ namespace CMI.Model.Migrations
                         .HasColumnType("NVARCHAR2(64)")
                         .HasColumnName("LAST_EDITOR_BY");
 
-                    b.Property<long>("StudentId")
-                        .HasColumnType("NUMBER(19)")
-                        .HasColumnName("STUDENT_ID");
+                    b.Property<long>("RecordId")
+                        .HasColumnType("NUMBER(19)");
+
+                    b.Property<long?>("StudentId")
+                        .HasColumnType("NUMBER(19)");
+
+                    b.Property<int>("TableId")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<long?>("TeacherId")
+                        .HasColumnType("NUMBER(19)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("FAMILY_RELATIONSHIP", (string)null);
                 });
@@ -451,6 +461,79 @@ namespace CMI.Model.Migrations
                     b.ToTable("STUDENT", (string)null);
                 });
 
+            modelBuilder.Entity("CMI.Model.Entities.Teacher", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("ID");
+
+                    b.Property<long>("BirthDate")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("BIRTH_DATE");
+
+                    b.Property<long>("CREATED_AT")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("CREATED_AT");
+
+                    b.Property<string>("CREATED_BY")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("NVARCHAR2(64)")
+                        .HasColumnName("CREATED_BY");
+
+                    b.Property<string>("CREATED_VIA")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("NVARCHAR2(15)")
+                        .HasColumnName("CREATED_VIA");
+
+                    b.Property<long>("CityId")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("CITY_ID");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("FIRST_NAME");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("NUMBER(1)")
+                        .HasColumnName("IS_ACTIVE");
+
+                    b.Property<long?>("LAST_EDITED_AT")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("LAST_EDITED_AT");
+
+                    b.Property<string>("LAST_EDITED_VIA")
+                        .HasMaxLength(15)
+                        .HasColumnType("NVARCHAR2(15)")
+                        .HasColumnName("LAST_EDITED_VIA");
+
+                    b.Property<string>("LAST_EDITOR_BY")
+                        .HasMaxLength(64)
+                        .HasColumnType("NVARCHAR2(64)")
+                        .HasColumnName("LAST_EDITOR_BY");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)")
+                        .HasColumnName("LAST_NAME");
+
+                    b.Property<long>("LevelId")
+                        .HasColumnType("NUMBER(19)")
+                        .HasColumnName("LEVEL_ID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("LevelId");
+
+                    b.ToTable("TEACHER", (string)null);
+                });
+
             modelBuilder.Entity("FIS.SQL_Oracle.Entities.Error", b =>
                 {
                     b.Property<long>("Id")
@@ -568,13 +651,13 @@ namespace CMI.Model.Migrations
 
             modelBuilder.Entity("CMI.Model.Entities.FamilyRelationship", b =>
                 {
-                    b.HasOne("CMI.Model.Entities.Student", "Student")
+                    b.HasOne("CMI.Model.Entities.Student", null)
                         .WithMany("FamilyRelationships")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("StudentId");
 
-                    b.Navigation("Student");
+                    b.HasOne("CMI.Model.Entities.Teacher", null)
+                        .WithMany("FamilyRelationships")
+                        .HasForeignKey("TeacherId");
                 });
 
             modelBuilder.Entity("CMI.Model.Entities.InspectionSubGroup", b =>
@@ -656,6 +739,25 @@ namespace CMI.Model.Migrations
                     b.Navigation("Level");
                 });
 
+            modelBuilder.Entity("CMI.Model.Entities.Teacher", b =>
+                {
+                    b.HasOne("CMI.Model.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CMI.Model.Entities.LevelByHatef", "Level")
+                        .WithMany()
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Level");
+                });
+
             modelBuilder.Entity("CMI.Model.Entities.City", b =>
                 {
                     b.Navigation("Students");
@@ -672,6 +774,11 @@ namespace CMI.Model.Migrations
                 });
 
             modelBuilder.Entity("CMI.Model.Entities.Student", b =>
+                {
+                    b.Navigation("FamilyRelationships");
+                });
+
+            modelBuilder.Entity("CMI.Model.Entities.Teacher", b =>
                 {
                     b.Navigation("FamilyRelationships");
                 });

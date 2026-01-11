@@ -1,11 +1,16 @@
-namespace CMI.Model.Entities;
+namespace CMI.WebApi.Dto.Response;
 
 /// <summary>
-/// دانش آموز
+/// معلم
 /// </summary>
-public class Student : Entity<long>
+public class OutTeacher
 {
     // Properties.
+    /// <summary>
+    /// شناسه
+    /// </summary>
+    public long Id { get; set; }
+
     /// <summary>
     /// نام
     /// </summary>
@@ -20,7 +25,7 @@ public class Student : Entity<long>
     /// پایه
     /// </summary>
     public long LevelId { get; set; }
-
+    public string LevelTitle { get; set; }
     /// <summary>
     /// شهر
     /// </summary>
@@ -34,14 +39,8 @@ public class Student : Entity<long>
     /// <summary>
     /// تاریخ تولد
     /// </summary>
-    public long BirthDate { get; set; }
-    public LevelByHatef Level { get; set; }
-    public City City { get; set; }
-    //public ICollection<FamilyRelationship> FamilyRelationships { get; set; }
-    public ICollection<EducationalQualification> EducationalQualification { get; set; }
-    public void AddEducationalQualification(string educational, Score score)
-    {
-        EducationalQualification.Add(new EducationalQualification(educational, score));
-    }
-
+    public string BirthDate { get; set; }
+    public string FullName { get; set; }
+    public ZimaTableColumn[][]? FamilyRelationshipsTableData { get; set; }
 }
+

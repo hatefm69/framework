@@ -20,6 +20,8 @@ public class CmiDataContext : SQL_OracleDataContext
 
     public DbSet<Student> Students { get; set; }
 
+    public DbSet<Teacher> Teachers { get; set; }
+
     public DbSet<City> Cities { get; set; }
 
     public DbSet<FamilyRelationship> FamilyRelationships { get; set; }
@@ -52,6 +54,7 @@ public class CmiDataContext : SQL_OracleDataContext
         modelBuilder.HasSequence<long>("INSPECTION_TERM_CODE_SEQ").StartsAt(1);
         modelBuilder.ApplyConfiguration(new LevelByHatefMap());
         modelBuilder.ApplyConfiguration(new StudentMap());
+        modelBuilder.ApplyConfiguration(new TeacherMap());
         modelBuilder.ApplyConfiguration(new CityMap());
         modelBuilder.ApplyConfiguration(new FamilyRelationshipMap());
         modelBuilder.ApplyConfiguration(new AttachmentMap());

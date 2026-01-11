@@ -1,12 +1,12 @@
 namespace CMI.WebApi.Controllers;
 
 /// <summary>
-/// دانش آموز
+/// معلم
 /// </summary>
 //[AuthenticationCheck]
 [Route("api/cmi/[controller]")]
 [ApiController]
-public class StudentController : WebAPI_Controller<Student, CmiDataContext, StudentRepository, IStudentService>
+public class TeacherController : WebAPI_Controller<Teacher, CmiDataContext, TeacherRepository, ITeacherService>
 {
     // Variables. 
     private readonly IMapper _mapper;
@@ -17,7 +17,7 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
     /// </summary>
     /// <param name="service">The service object</param>
     /// <param name="mapper">The mapper object</param>
-    public StudentController(IStudentService service, IMapper mapper) : base(service, true)
+    public TeacherController(ITeacherService service, IMapper mapper) : base(service, true)
     {
         _mapper = mapper;
     }
@@ -38,7 +38,7 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
             var pageParams = gridSearchFilter.ConvertToFilterParams(15, 0);
             var records = Service.SearchRecords(pageParams);
 
-            return new ZimaSimpleGridData<Model.Models.OutStudent>
+            return new ZimaSimpleGridData<Model.Models.OutTeacher>
             {
                 MetaData = new ZimaGridMetaData
                 {
@@ -61,13 +61,7 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
     //[AccessPermissionCheck(Roles = new string[] { "admin" })]
     public IActionResult Get(long id)
     {
-        return ProcessJson(() =>
-        {
-            return _mapper.Map<StudentWithFamilyRelation?, Dto.Response.OutStudent>(Service.Get(id));
-        }
-
-
-        , usePureResponse: true);
+        return ProcessJson(() => _mapper.Map<TeacherWithFamilyRelation?, Dto.Response.OutTeacher>(Service.Get(id)), usePureResponse: true);
     }
 
     [HttpGet]
@@ -75,7 +69,7 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
     //[AccessPermissionCheck(Roles = new string[] { "admin" })]
     public IActionResult GetWithAttachment(long id)
     {
-        return ProcessJson(() => _mapper.Map<StudentWithAttachment?, OutStudentWithAttachment>(Service.GetWithAttachment(id)));
+        return ProcessJson(() => _mapper.Map<TeacherWithAttachment?, OutTeacherWithAttachment>(Service.GetWithAttachment(id)));
     }
 
     /// <summary>
@@ -108,15 +102,15 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
         {
             if (Request.IsContentJson())
             {
-                var inputData = Request.GetAndValidateEncryptedData<InStudent>();
-                var entity = _mapper.Map<InStudent, StudentWithFamilyRelation>(inputData);
+                var inputData = Request.GetAndValidateEncryptedData<InTeacher>();
+                var entity = _mapper.Map<InTeacher, TeacherWithFamilyRelation>(inputData);
 
                 Service.AddRecord(entity);
             }
             else
             {
-                var inputData = Request.GetAndValidateEncryptedFilesData<InStudent>();
-                var entity = _mapper.Map<InStudent, StudentWithFamilyRelation>(inputData.Data);
+                var inputData = Request.GetAndValidateEncryptedFilesData<InTeacher>();
+                var entity = _mapper.Map<InTeacher, TeacherWithFamilyRelation>(inputData.Data);
                 Service.AddRecord(entity, inputData.Files);
             }
 
@@ -134,9 +128,9 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
     {
         //return ProcessJson(() =>
         //{
-        //    var inputData = Request.GetAndValidateEncryptedData<InStudent>();
+        //    var inputData = Request.GetAndValidateEncryptedData<InTeacher>();
 
-        //    Service.UpdateRecord(_mapper.Map<InStudent, Student>(inputData));
+        //    Service.UpdateRecord(_mapper.Map<InTeacher, Teacher>(inputData));
         //});
 
 
@@ -144,15 +138,15 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
         {
             if (Request.IsContentJson())
             {
-                var inputData = Request.GetAndValidateEncryptedData<InStudent>();
-                var entity = _mapper.Map<InStudent, StudentWithFamilyRelation>(inputData);
+                var inputData = Request.GetAndValidateEncryptedData<InTeacher>();
+                var entity = _mapper.Map<InTeacher, TeacherWithFamilyRelation>(inputData);
 
                 Service.UpdateRecord(entity);
             }
             else
             {
-                var inputData = Request.GetAndValidateEncryptedFilesData<InStudent>();
-                var entity = _mapper.Map<InStudent, StudentWithFamilyRelation>(inputData.Data);
+                var inputData = Request.GetAndValidateEncryptedFilesData<InTeacher>();
+                var entity = _mapper.Map<InTeacher, TeacherWithFamilyRelation>(inputData.Data);
                 Service.UpdateRecord(entity, inputData.Files);
             }
 
@@ -160,3 +154,4 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
 
     }
 }
+

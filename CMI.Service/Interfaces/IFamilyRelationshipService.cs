@@ -7,6 +7,6 @@ public interface IFamilyRelationshipService : IBaseService<FamilyRelationship, C
 {
     // Functions.
     void Delete(long id);
-    void DeleteRange(long id);
+    void DeleteRange(long id, TableEnum table);
     FamilyRelationship? Get(long id);
 }

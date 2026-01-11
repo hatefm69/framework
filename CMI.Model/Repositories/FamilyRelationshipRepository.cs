@@ -17,8 +17,8 @@ public class FamilyRelationshipRepository : Repository<FamilyRelationship, CmiDa
     #region Public Functions.
 
     public FamilyRelationship? Get(long id) => EntityQueryable.SingleOrDefault(rd => rd.Id == id);
-    public List<FamilyRelationship>? GetByStudentId(long id) => EntityQueryable.Where(rd => rd.StudentId == id).ToList();
 
+    public List<FamilyRelationship>? GetByRecordById(long id, TableEnum table) => EntityQueryable.Where(rd => rd.RecordId == id && rd.TableId == table).ToList();
     public List<FamilyRelationship> GetAll() => EntityQueryable.ToList();
 
     #endregion

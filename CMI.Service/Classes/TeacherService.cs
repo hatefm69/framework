@@ -3,13 +3,13 @@ using FIS.Tools;
 namespace CMI.Service.Classes;
 
 /// <summary>
-/// دانش آموز
+/// معلم
 /// </summary>
-public class StudentService : BaseService<Student, CmiDataContext, StudentRepository>, IStudentService
+public class TeacherService : BaseService<Teacher, CmiDataContext, TeacherRepository>, ITeacherService
 {
     private CmiDataContext _cmiDataContext { get; set; }
     // Events.
-    public StudentService(CmiDataContext dataContext, IServiceLocator repositoryLocator) : base(dataContext, repositoryLocator)
+    public TeacherService(CmiDataContext dataContext, IServiceLocator repositoryLocator) : base(dataContext, repositoryLocator)
     {
         _cmiDataContext = dataContext;
         dataContext.GetUserInformaion = () => new UserInformation
@@ -19,14 +19,14 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
         };
     }
 
-    public StudentWithFamilyRelation? Get(long id)
+    public TeacherWithFamilyRelation? Get(long id)
     {
         var entity = EntityRepository.Get(id);
         if (entity == null)
             throw new InformationException("داده ای با شناسه ارسالی پیدا نشد");
         return entity;
     }
-    public StudentWithAttachment? GetWithAttachment(long id)
+    public TeacherWithAttachment? GetWithAttachment(long id)
     {
         var entity = EntityRepository.GetWithAttachment(id);
         if (entity == null)
@@ -34,24 +34,18 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
         return entity;
     }
 
-    public override void UpdateRecord(Student entity)
+    public void UpdateRecord(TeacherWithFamilyRelation entity)
     {
-        GetService<FamilyRelationship, FamilyRelationshipRepository, FamilyRelationshipService>().DeleteRange(entity.Id, TableEnum.Student);
-        base.UpdateRecord(entity);
+        var familyRelationshipService = GetService<FamilyRelationship, FamilyRelationshipRepository, FamilyRelationshipService>();
+        familyRelationshipService.DeleteRange(entity.Teacher.Id, TableEnum.Teacher);
+        base.UpdateRecord(entity.Teacher);
+        familyRelationshipService.AddRecords(entity.FamilyRelationships.ToList());
     }
-    public void UpdateRecord(StudentWithFamilyRelation entity)
+    public void UpdateRecord(TeacherWithFamilyRelation entity, IFormFileCollection files)
     {
-        var familyService = GetService<FamilyRelationship, FamilyRelationshipRepository, FamilyRelationshipService>();
-        familyService.DeleteRange(entity.Student.Id, TableEnum.Student);
-        familyService.AddRecords(entity.FamilyRelationships.ToList());
-        base.UpdateRecord(entity.Student);
-    }
-    public void UpdateRecord(StudentWithFamilyRelation entity, IFormFileCollection files)
-    {
-
         var familyRelationshipService = GetService<FamilyRelationship, FamilyRelationshipRepository, FamilyRelationshipService>();
 
-        familyRelationshipService.DeleteRange(entity.Student.Id, TableEnum.Student);
+        familyRelationshipService.DeleteRange(entity.Teacher.Id, TableEnum.Teacher);
         var sanaFileInfo = new List<SanaFileInfo>();
         var attachmentService = GetService<Attachment, AttachmentRepository, AttachmentService>();
         Transaction.Begin(onTask: () =>
@@ -60,22 +54,22 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
             {
                 sanaFileInfo = SanaHelper.UploadFiles(files);
 
-                entity.Student.Id = _cmiDataContext.Next_SEQ().Value;
-                base.UpdateRecord(entity.Student);
+                entity.Teacher.Id = _cmiDataContext.Next_SEQ().Value;
+                base.UpdateRecord(entity.Teacher);
 
                 attachmentService.UpdateRecords(sanaFileInfo.Select(x => new Attachment
                 {
                     FileName = x.Filename,
-                    TableId = TableEnum.Student,
+                    TableId = TableEnum.Teacher,
                     SanaId = x.Id,
-                    RecordId = entity.Student.Id
+                    RecordId = entity.Teacher.Id
                 }).ToList());
                 familyRelationshipService.AddRecords(entity.FamilyRelationships.Select(x => new FamilyRelationship
                 {
                     FamilyRelationshipId = x.FamilyRelationshipId,
                     FullName = x.FullName,
-                    RecordId = entity.Student.Id,
-                    TableId = TableEnum.Student,
+                    RecordId = entity.Teacher.Id,
+                    TableId = TableEnum.Teacher,
                 }).ToList());
                 CommitDatabaseChanges();
             }
@@ -97,58 +91,38 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
             }
         });
 
-
-
-        //if (!(files == null || files.Count == 0))
-        //{
-
-
-        //    var sanaResult = SanaHelper.UploadFiles(files);
-        //    base.UpdateRecord(entity);
-
-        //    attachmentService.AddRecords(sanaResult.Select(x => new Attachment
-        //    {
-        //        FileName = x.Filename,
-        //        TableId = TableEnum.Student,
-        //        SanaId = x.Id,
-        //        RecordId = entity.Id
-        //    }).ToList());
-
-        //}
-
     }
 
 
-    public List<OutStudent> SearchRecords(PageParams pageParams, ExpressionBindType expressionBindType = ExpressionBindType.AndAlso)
+    public List<OutTeacher> SearchRecords(PageParams pageParams, ExpressionBindType expressionBindType = ExpressionBindType.AndAlso)
     {
         return EntityRepository.SearchRecords(pageParams);
     }
 
     public void Delete(long id)
     {
-        var entity = EntityRepository.GetPureStudent(id);
+        var entity = EntityRepository.GetPureTecher(id);
 
         if (entity == null) return;
         EntityRepository.Remove(entity);
     }
-    public override void AddRecord(Student entity)
+    public override void AddRecord(Teacher entity)
     {
         entity.Id = _cmiDataContext.Next_SEQ().Value;
         //entity.AddEducationalQualification("پیش دبستانی", new Score(0));
         base.AddRecord(entity);
     }
-    public void AddRecord(StudentWithFamilyRelation entity)
+    public void AddRecord(TeacherWithFamilyRelation entity)
     {
-        entity.Student.Id = _cmiDataContext.Next_SEQ().Value;
+        entity.Teacher.Id = _cmiDataContext.Next_SEQ().Value;
         //entity.AddEducationalQualification("پیش دبستانی", new Score(0));
 
         var familyRelationshipService = GetService<FamilyRelationship, FamilyRelationshipRepository, FamilyRelationshipService>();
-        base.AddRecord(entity.Student);
+        base.AddRecord(entity.Teacher);
         familyRelationshipService.AddRecords(entity.FamilyRelationships.ToList());
     }
-    public void AddRecord(StudentWithFamilyRelation entity, IFormFileCollection files)
+    public void AddRecord(TeacherWithFamilyRelation entity, IFormFileCollection files)
     {
-
         var familyRelationshipService = GetService<FamilyRelationship, FamilyRelationshipRepository, FamilyRelationshipService>();
         var attachmentService = GetService<Attachment, AttachmentRepository, AttachmentService>();
         var sanaFileInfo = new List<SanaFileInfo>();
@@ -159,24 +133,26 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
             {
                 sanaFileInfo = SanaHelper.UploadFiles(files);
 
-                entity.Student.Id = _cmiDataContext.Next_SEQ().Value;
-                base.AddRecord(entity.Student);
+                entity.Teacher.Id = _cmiDataContext.Next_SEQ().Value;
+                base.AddRecord(entity.Teacher);
 
                 attachmentService.AddRecords(sanaFileInfo.Select(x => new Attachment
                 {
                     FileName = x.Filename,
-                    TableId = TableEnum.Student,
+                    TableId = TableEnum.Teacher,
                     SanaId = x.Id,
-                    RecordId = entity.Student.Id
+                    RecordId = entity.Teacher.Id
                 }).ToList());
+
                 familyRelationshipService.AddRecords(entity.FamilyRelationships.Select(x => new FamilyRelationship
                 {
                     FamilyRelationshipId = x.FamilyRelationshipId,
                     FullName = x.FullName,
-                    RecordId = entity.Student.Id,
-                    TableId = TableEnum.Student,
+                    RecordId = entity.Teacher.Id,
+                    TableId = TableEnum.Teacher,
                 }).ToList());
                 CommitDatabaseChanges();
+
             }
         },
         onCommit: () =>
@@ -198,3 +174,4 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
 
     }
 }
+

@@ -1,7 +1,7 @@
 using FIS.SQL_Oracle.HelperClasses;
 using FIS.WebAPIFramework.Enums;
 
-namespace InternalAudit.WebApi.Classes
+namespace CMI.WebApi.Classes
 {
     /// <summary>
     /// Handles all exceptions.
@@ -18,16 +18,9 @@ namespace InternalAudit.WebApi.Classes
         /// <returns></returns>
         public override string Log(HttpRequest request, Exception exception, ExceptionType exceptionType)
         {
-            string? trackingCode;
+            string? trackingCode = ErrorLogger.Log(request, exception, request.Headers, CmiDataContext.AppName);
 
-            if (request == null)
-                trackingCode = ErrorLogger.Log(exception, exceptionType.ToString(), CmiDataContext.AppName);
-            else
-                trackingCode = ErrorLogger.Log(request, exception, request.Headers, CmiDataContext.AppName);
-            var message = $"Tracking codes: '{trackingCode}'";
-
-            Console.WriteLine(message);
-            return message;
+            return $"Tracking codes: '{trackingCode}'";
         }
     }
 }
