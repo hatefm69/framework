@@ -182,6 +182,10 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
             return records.Select(x => new ZimaTableColumn[]
             {
                     new() { Value = x.FileName.ToString() , Name= nameof(x.FileName).AsCamelCase() },
+
+                       new() { Value = ((AttachementCategoryEnum) x.AttachmentCategoryId).GetDescription() , Name = "attachmentCategoryTitle" },
+
+
                     new() { Value = x.Id.ToString() , Name = nameof(x.Id).AsCamelCase() },
             }).ToList();
 

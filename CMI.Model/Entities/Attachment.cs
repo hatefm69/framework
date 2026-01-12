@@ -25,6 +25,8 @@ namespace CMI.Model.Entities
         /// شناسه رکورد
         /// </summary>
         public long RecordId { get; set; }
+        public AttachementCategoryEnum AttachmentCategoryId { get; set; }
 
     }
+
 }

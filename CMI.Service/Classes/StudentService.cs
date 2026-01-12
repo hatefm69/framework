@@ -157,18 +157,27 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
         {
             if (!(files == null || files.Count == 0))
             {
-                sanaFileInfo = SanaHelper.UploadFiles(files);
 
+
+                //var file=files.GroupBy(x => x.Name);
+                //sanaFileInfo = SanaHelper.UploadFiles(files);
                 entity.Student.Id = _cmiDataContext.Next_SEQ().Value;
                 base.AddRecord(entity.Student);
+
+                if (files.GroupBy(x => x.FileName).Where(z => z.Count() > 1).Any())
+                    new InformationException("نام فایل ها نباید یکسان باشد.");
+
+                sanaFileInfo = SanaHelper.UploadFiles(files);
 
                 attachmentService.AddRecords(sanaFileInfo.Select(x => new Attachment
                 {
                     FileName = x.Filename,
                     TableId = TableEnum.Student,
                     SanaId = x.Id,
-                    RecordId = entity.Student.Id
+                    RecordId = entity.Student.Id,
+                    AttachmentCategoryId = files.First(z => z.FileName == x.Filename).Name.Contains("signature") ? AttachementCategoryEnum.Signature : AttachementCategoryEnum.Excel
                 }).ToList());
+
                 familyRelationshipService.AddRecords(entity.FamilyRelationships.Select(x => new FamilyRelationship
                 {
                     FamilyRelationshipId = x.FamilyRelationshipId,
