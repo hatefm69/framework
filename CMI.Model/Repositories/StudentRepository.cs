@@ -70,7 +70,7 @@ public class StudentRepository : Repository<Student, CmiDataContext>
 
 
 
-    public List<Student> GetAll() => EntityQueryable.ToList();
+    public List<Student> GetAll() => EntityQueryable.Include(x => x.Level).Include(x => x.City).ToList();
     public List<OutStudent> SearchRecords(PageParams pageParams)
     {
         var studentTbl = EntityQueryable.AsNoTracking();

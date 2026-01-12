@@ -1,3 +1,4 @@
+using ClosedXML.Excel;
 using FIS.Tools;
 
 namespace CMI.Service.Classes;
@@ -119,9 +120,23 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
     }
 
 
-    public List<OutStudent> SearchRecords(PageParams pageParams, ExpressionBindType expressionBindType = ExpressionBindType.AndAlso)
+    public List<OutStudent> SearchRecords(PageParams pageParams)
     {
         return EntityRepository.SearchRecords(pageParams);
+    }
+    public List<OutStudent> GetAll()
+    {
+        return EntityRepository.GetAll().Select(z => new OutStudent
+        {
+            BirthDate = z.BirthDate,
+            CityTitle = z.City?.Title,
+            FirstName = z.FirstName,
+            LastName = z.LastName,
+            IsActive = z.IsActive,
+            LevelTitle = z.Level?.Title,
+            FullName = $"{z.FirstName} {z.LastName}",
+            Id = z.Id
+        }).ToList();
     }
 
     public void Delete(long id)
@@ -206,4 +221,81 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
         });
 
     }
+
+    public byte[] GetCombinedReportExcelFile(List<OutStudent> students, string header)
+    {
+        using var workbook = new XLWorkbook();
+        var worksheet = workbook.Worksheets.Add("گزارش ترکیبی");
+        worksheet.RightToLeft = true;
+        worksheet.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+        worksheet.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
+        worksheet.Style.Font.FontSize = 12;
+
+        // ==== Header ====
+        worksheet.Cell(1, 1).Value = header;
+        worksheet.Range("A1:G1").Merge().Style
+            .Font.SetBold()
+            .Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+        worksheet.Row(1).Height = 25;
+
+        // ==== Columns ====
+        var columns = new[]
+        {
+            "ردیف", "شناسه", "نام", "نام خانوادگی", "شهر", "پایه", "وضعیت",
+        };
+
+        for (int i = 0; i < columns.Length; i++)
+            worksheet.Cell(2, i + 1).Value = columns[i];
+
+        var colCount = columns.Length;
+        worksheet.Range(1, 1, 2, colCount).Style
+            .Font.SetBold()
+            .Fill.SetBackgroundColor(XLColor.LightGray)
+            .Border.SetOutsideBorder(XLBorderStyleValues.Thin)
+            .Border.SetInsideBorder(XLBorderStyleValues.Thin);
+
+        // ==== داده‌ها ====
+
+        int currentRow = 3;
+        int provinceRowNumber = 1; // شماره برای هر استان
+
+        var studentsOrdered = students.OrderBy(g => g.Id).ToList();
+        studentsOrdered.ForEach(student =>
+        {
+            worksheet.Cell(currentRow, 1).Value = studentsOrdered.IndexOf(student) + 1;
+            worksheet.Cell(currentRow, 2).Value = student.Id;
+            worksheet.Cell(currentRow, 3).Value = student.FirstName;
+            worksheet.Cell(currentRow, 4).Value = student.LastName;
+            worksheet.Cell(currentRow, 5).Value = student.CityTitle;
+            worksheet.Cell(currentRow, 6).Value = student.LevelTitle;
+            worksheet.Cell(currentRow, 7).Value = student.IsActiveStatus;
+
+            if (currentRow % 2 == 0)
+                worksheet.Range(currentRow, 1, currentRow, colCount).Style
+                .Font.SetBold()
+                .Fill.SetBackgroundColor(XLColor.LightGray);
+            ++currentRow;
+        });
+
+
+        worksheet.Column(3).Width = 20;
+        worksheet.Column(4).Width = 40;
+        worksheet.Column(3).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+        worksheet.Column(4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
+
+        worksheet.Range($"A{currentRow}:D{currentRow}").Merge();
+        worksheet.Range($"E{currentRow}:G{currentRow}").Merge();
+        worksheet.Cell(currentRow, 1).Value = "تعداد کل:";
+        worksheet.Cell(currentRow, 5).Value = students.Count();
+        worksheet.Range(currentRow, 1, currentRow, colCount).Style.Font.SetFontColor(XLColor.Orange)
+          .Font.SetBold()
+          .Fill.SetBackgroundColor(XLColor.LightSlateGray)
+          .Border.SetOutsideBorder(XLBorderStyleValues.Thin)
+          ;
+
+        using var stream = new MemoryStream();
+        workbook.SaveAs(stream);
+        return stream.ToArray();
+    }
+
 }

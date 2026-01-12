@@ -191,4 +191,16 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
 
         }, usePureResponse: true);
     }
+
+    [HttpPost("GetAllStudentReportExcel")]
+    public IActionResult GetAllStudentReportExcel()
+    {
+        return ProcessStream(() =>
+        {
+            var records = Service.GetAll();
+
+            var fileContent = Service.GetCombinedReportExcelFile(records, "دانش آموزان");
+            return File(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        });
+    }
 }
