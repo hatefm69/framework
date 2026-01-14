@@ -98,25 +98,6 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
             }
         });
 
-
-
-        //if (!(files == null || files.Count == 0))
-        //{
-
-
-        //    var sanaResult = SanaHelper.UploadFiles(files);
-        //    base.UpdateRecord(entity);
-
-        //    attachmentService.AddRecords(sanaResult.Select(x => new Attachment
-        //    {
-        //        FileName = x.Filename,
-        //        TableId = TableEnum.Student,
-        //        SanaId = x.Id,
-        //        RecordId = entity.Id
-        //    }).ToList());
-
-        //}
-
     }
 
 
@@ -172,10 +153,6 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
         {
             if (!(files == null || files.Count == 0))
             {
-
-
-                //var file=files.GroupBy(x => x.Name);
-                //sanaFileInfo = SanaHelper.UploadFiles(files);
                 entity.Student.Id = _cmiDataContext.Next_SEQ().Value;
                 base.AddRecord(entity.Student);
 
