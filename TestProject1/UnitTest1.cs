@@ -7,23 +7,20 @@ namespace TestProject1
 
         [Theory]
         [ClassData(typeof(FileLineParserTestCases))]
-        public void Should_Not_Have_Error_When_PersianDate_Is_Equal_With_CycleConvertPersianDate(string date, string finalValue)
+        public void Should_Not_Have_Error_When_GorgianToPersian_Is_Equal_With_finalValue(string date, string finalValue, string finalGorgiandate)
         {
-
-            var persianDate = date.ToPersianDate();
-            var gorgiandate = persianDate.ToGorgianDate();
-            var finalDate = long.Parse(gorgiandate).ToPersianWithSpliter().Replace("/", "");
-            var result = string.Equals(finalDate, persianDate);
+            var persianDate = date.ToPersianDate(DateSepratorEnum.Dash);
+            var result = string.Equals(finalValue.ToString(), persianDate.ToString());
             Assert.True(result);
         }
         [Theory]
         [ClassData(typeof(FileLineParserTestCases))]
-        public void Should_Not_Have_Error_When_PersianDate_Is_Equal_With_CycleConvertPersianDateEqualFinalValue(string date, string finalValue)
+        public void Should_Not_Have_Error_When_GorgianToPersian_Is_Equal_With_CycleConvertGorgianEqualFinalGorgiandate(string date, string finalValue, string finalGorgiandate)
         {
-            var persianDate = date.ToPersianDate();
+            var persianDate = date.ToPersianDate(DateSepratorEnum.Dash);
             var gorgiandate = persianDate.ToGorgianDate();
-            var finalDate = long.Parse(gorgiandate).ToPersianWithSpliter().Replace("/", "");
-            var result = string.Equals(finalDate, finalValue);
+
+            var result = string.Equals(finalGorgiandate.ToString(), gorgiandate.ToString());
             Assert.True(result);
         }
     }

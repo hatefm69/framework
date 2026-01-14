@@ -22,9 +22,6 @@ namespace CMI.Service.HelperClasses
                     throw new InformationException($"دانش آموزی در فایل اکسل درج نکرده اید");
                 var columns = typeof(T).GetProperties().Select(z => new { Name = z.Name, Description = z.Attributes.GetDescription(), Type = z.GetMemberType() });
 
-                //var columns = new List<string>(){
-                //    "نام","نام خانوادگی","پایه","شهر","وضعیت","تاریخ تولد","خویشاوندان"
-                //};
                 // سطر اول یعنی سر ستونها
                 if (row.RowNumber() == 1)
                 {
@@ -53,46 +50,42 @@ namespace CMI.Service.HelperClasses
                     var rownumber = row.Cells().ToList().IndexOf(cell);
                     if (string.IsNullOrEmpty(cell.Value.ToString()))
                         throw new InformationException($@"در سطر {rownumber} ستون {column.Name} خالی هست");
-                    if (column.Type == typeof(int))
+                    if (column.Type == typeof(int?) || column.Type == typeof(int))
                     {
-                        if (int.TryParse(cell.Value.ToString(), out int intCode) == false)
-                            throw new InformationException($"در سطر {rownumber} ستون {column.Name} عدد معتبر نیست");
+                        if (column.Type.IsNullableType())
+                        {
+                            if (int.TryParse(cell.Value.ToString(), out int intCode) == false)
+                                throw new InformationException($"در سطر {rownumber} ستون {column.Name} عدد معتبر نیست");
 
-                        var errorColumn = typeof(T).GetProperties().Where(z => z.Name == title).Select(z => new { Name = z.Name, Description = z.Attributes.GetDescription() });
+                            var errorColumn = typeof(T).GetProperties().Where(z => z.Name == title).Select(z => new { Name = z.Name, Description = z.Attributes.GetDescription() });
 
-                        if (int.TryParse(cell.Value.ToString(), out int intCodeMinMaxValue) == true && (intCodeMinMaxValue > 999999 || intCodeMinMaxValue < 1))
-                            throw new InformationException($"در سطر {rownumber} ستون {column.Name} : {errorColumn}");
+                            if (int.TryParse(cell.Value.ToString(), out int intCodeMinMaxValue) == true && (intCodeMinMaxValue > 999999 || intCodeMinMaxValue < 1))
+                                throw new InformationException($"در سطر {rownumber} ستون {column.Name} : {errorColumn}");
 
-                        student.GetType().SetMemberValue(column.Name, int.Parse(cell.Value.ToString()));
-
+                            student.GetType().SetMemberValue(column.Name, int.Parse(cell.Value.ToString()));
+                        }
                     }
                     if (column.Type == typeof(bool?) || column.Type == typeof(bool))
                     {
-                        if (bool.TryParse(cell.Value.ToString(), out bool boolCode) == false)
+                        if (column.Type.IsNullableType())
                         {
-                            if (cell.Value.ToString() == "غیر فعال")
-                                boolCode = false;
-                            else
-                            if (cell.Value.ToString() == "فعال")
-                                boolCode = true;
-                            else
-                                throw new InformationException($"در سطر {rownumber} ستون {column.Name} عدد معتبر نیست");
+                            if (bool.TryParse(cell.Value.ToString(), out bool boolCode) == false)
+                            {
+                                if (cell.Value.ToString() == "غیر فعال" || cell.Value.ToString() == "نه" || cell.Value.ToString() == "false" || cell.Value.ToString() == "0")
+                                    boolCode = false;
+                                else
+                                if (cell.Value.ToString() == "فعال" || cell.Value.ToString() == "آری" || cell.Value.ToString() == "اری" || cell.Value.ToString() == "true" || cell.Value.ToString() == "1")
+                                    boolCode = true;
+                                else
+                                    throw new InformationException($"در سطر {rownumber} ستون {column.Name} عدد معتبر نیست");
+                            }
+                            student.GetType().GetProperty(column.Name).SetValue(student, boolCode);
                         }
-
-                        var errorColumn = typeof(T).GetProperties().Where(z => z.Name == title).Select(z => new { Name = z.Name, Description = z.Attributes.GetDescription() });
-
-                        student.GetType().GetProperty(column.Name).SetValue(student, boolCode);
-
-
                     }
                     else
                     {
                         student.GetType().GetProperty(column.Name).SetValue(student, cell.Value.ToString());
-
                     }
-
-
-
                 }
                 data.Add(student);
             }
