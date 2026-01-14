@@ -1,4 +1,5 @@
 using CMI.Service.Classes;
+using FIS.Tools.Exceptions;
 
 namespace CMI.WebApi.Controllers;
 
@@ -12,6 +13,7 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
 {
     // Variables. 
     private readonly IMapper _mapper;
+    private readonly IWebHostEnvironment _hostingEnvironment;
 
     // Events. 
     /// <summary>
@@ -19,9 +21,10 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
     /// </summary>
     /// <param name="service">The service object</param>
     /// <param name="mapper">The mapper object</param>
-    public StudentController(IStudentService service, IMapper mapper) : base(service, true)
+    public StudentController(IStudentService service, IMapper mapper, IWebHostEnvironment hostingEnvironment) : base(service, true)
     {
         _mapper = mapper;
+        _hostingEnvironment = hostingEnvironment;
     }
 
     // Web APIs.
@@ -201,6 +204,40 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
 
             var fileContent = Service.GetCombinedReportExcelFile(records, "دانش آموزان");
             return File(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        });
+    }
+    /// <summary>
+    /// ثبت گروهی فعالیت ها و واحدهای متولی با اکسل
+    /// </summary>
+    [HttpPost]
+    [Route("AddRangeByExcel")]
+    //[AccessPermissionCheck(Roles = [Roles.Supervisor_Admin, Roles.System_Admin])]
+    public IActionResult AddRangeByExcel()
+    {
+        return ProcessJson(() =>
+        {
+            var encryptedData = Request.GetAndValidateEncryptedFilesData<InSchoolByExcel>();
+            if (encryptedData == null)
+                throw new InformationException("مدل ورودی نامعتبر می باشد");
+            Service.AddRangeByExcel(encryptedData.Files);
+        });
+    }
+    /// <summary>
+    /// دانلود فایل نمونه اکسل در صفحه افزودن گروهی زیر فعالیت ها 
+    /// </summary>
+    [HttpGet]
+    [Route("DownloadTemplateFileForAddRangeByExcel")]
+    //[AccessPermissionCheck(Roles = [Roles.Supervisor_Admin, Roles.System_Admin, Roles.Department_Head, Roles.Deputy_Office, Roles.Auditor, Roles.Audit_Committee])]
+    public IActionResult DownloadTemplateFileForAddRangeByExcel()
+    {
+        return ProcessStream(() =>
+        {
+            var fileName = "downloadTemplateStudent.xlsx";
+            var filePath = Path.Combine(_hostingEnvironment.ContentRootPath, "Content", fileName);
+            if (!System.IO.File.Exists(filePath))
+                throw new InformationException("فایل نمونه اکسل موجود نیست");
+            var fileBytes = System.IO.File.ReadAllBytes(filePath);
+            return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         });
     }
 }

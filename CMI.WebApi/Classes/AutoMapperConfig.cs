@@ -18,10 +18,10 @@ public class AutoMapperConfig : Profile
         CreateMap<InInspectionSubGroup, InspectionSubGroup>();
         CreateMap<InLevelByHatef, LevelByHatef>();
         CreateMap<InStudent, Student>()
-            .ForMember(x => x.BirthDate, d => d.MapFrom(x => x.BirthDate.ToPersianDate()));
+            .ForMember(x => x.BirthDate, d => d.MapFrom(x => x.BirthDate.ToPersianDate(DateSepratorEnum.Dash)));
 
         CreateMap<InTeacher, Teacher>()
-         .ForMember(x => x.BirthDate, d => d.MapFrom(x => x.BirthDate.ToPersianDate()));
+         .ForMember(x => x.BirthDate, d => d.MapFrom(x => x.BirthDate.ToPersianDate(DateSepratorEnum.Dash)));
 
         CreateMap<InCity, City>();
         CreateMap<InFamilyRelationship, FamilyRelationship>()

@@ -298,4 +298,65 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
         return stream.ToArray();
     }
 
+    public void AddRangeByExcel(IFormFileCollection files)
+    {
+        var repoCity = EntityRepository.GetRepository<City, CityRepository>();
+        var repoLevel = EntityRepository.GetRepository<LevelByHatef, LevelByHatefRepository>();
+        var repoFamilyRelationship = EntityRepository.GetRepository<FamilyRelationship, FamilyRelationshipRepository>();
+        var cities = repoCity.GetAll();
+        var levels = repoLevel.GetAll();
+        //var familyRelationships = repoFamilyRelationship.GetAll();
+        var data = files.GetData<InStudentFromExcel>();
+        var FamilyRelationshipEnums = Enum.GetNames(typeof(FamilyRelationshipEnum)).Select(c => new { FamilyRelationshipName = Enum.Parse<FamilyRelationshipEnum>(c).GetDescription(), Id = Enum.Parse<FamilyRelationshipEnum>(c) }).ToList();
+        var entities = data.Select(x => new
+        {
+            Id = _cmiDataContext.Next_SEQ().Value,
+            x.FirstName,
+            x.LastName,
+
+            CityId = cities.FirstOrDefault(city => city.Title == x.CityTitle).Id,
+            IsActive = x.IsActive ?? false,
+            LevelId = levels.FirstOrDefault(level => level.Title == x.LevelTitle).Id,
+            BirthDate = x.BirthDate.ToPersianDate(DateSepratorEnum.Slash),
+            familyRelationships = x.StrFamilyRelationships.Split("#").Select(str => new FamilyRelationship
+            {
+                TableId = TableEnum.Student,
+                FullName = str.Split("،")[1],
+                FamilyRelationshipId =
+                (int)FamilyRelationshipEnums
+                .FirstOrDefault(familyRelationshipEnum =>
+                familyRelationshipEnum.FamilyRelationshipName == str.Split("،")[0].ToString()).Id
+            }).ToList()
+        }).ToList();
+
+
+        AddRecords(entities.Select(z => new Student
+        {
+            BirthDate = z.BirthDate,
+            CityId = z.CityId,
+            FirstName = z.FirstName,
+            IsActive = z.IsActive,
+            LastName = z.LastName,
+            LevelId = z.LevelId,
+            Id = z.Id
+        }).ToList());
+
+        var familyRelationships = new List<FamilyRelationship>();
+        entities.ForEach(entity =>
+        {
+            entity.familyRelationships.ForEach(family =>
+            {
+                familyRelationships.Add(new FamilyRelationship
+                {
+                    FamilyRelationshipId = family.FamilyRelationshipId,
+                    FullName = family.FullName,
+                    TableId = TableEnum.Student,
+                    RecordId = entity.Id
+                });
+            });
+        });
+
+
+        repoFamilyRelationship.AddRange(familyRelationships);
+    }
 }

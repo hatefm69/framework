@@ -9,12 +9,18 @@
 
   <ItemGroup>
     <None Remove="CMI.WebApi.xml" />
+    <None Remove="Content\downloadTemplateStudent.xlsx" />
+    <None Remove="downloadTemplateStudent.xlsx" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="CMI.WebApi.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Content\downloadTemplateStudent.xlsx" />
   </ItemGroup>
 
   <ItemGroup>

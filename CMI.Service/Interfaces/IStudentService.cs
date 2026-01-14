@@ -7,6 +7,7 @@ namespace CMI.Service.Interfaces;
 /// </summary>
 public interface IStudentService : IBaseService<Student, CmiDataContext, StudentRepository>
 {
+    void AddRangeByExcel(IFormFileCollection files);
     void AddRecord(StudentWithFamilyRelation entity, IFormFileCollection files);
     void AddRecord(StudentWithFamilyRelation entity);
 

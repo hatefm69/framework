@@ -24,16 +24,26 @@
         {
             return string.IsNullOrEmpty(value);
         }
-        public static long ToPersianDate(this string value)
+        public static long ToPersianDate(this string value, DateSepratorEnum dateSeprator)
         {
             var dtp = new DateTimeParts()
             {
-                DateSeprator = "-"
+                DateSeprator = dateSeprator.GetDescription()
             };
 
-            dtp.SetDateTime(value, DateTimeType.Gregorian);
+            dtp.SetDateTime(value, dateSeprator == DateSepratorEnum.Dash ? DateTimeType.Gregorian : DateTimeType.Persian);
 
             return dtp.GetPersianDate();
         }
+
+
+    }
+
+    public enum DateSepratorEnum
+    {
+        [Description("/")]
+        Slash,
+        [Description("-")]
+        Dash,
     }
 }
