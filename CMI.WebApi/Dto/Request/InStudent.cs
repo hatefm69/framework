@@ -49,9 +49,9 @@ public class InStudent : InputsValidator<InStudent>
     [Required(AllowEmptyStrings = false, ErrorMessage = "تاریخ تولد را وارد نمایید")]
     public string BirthDate { get; set; }
     /// <summary>
-    /// خیشاوند
+    /// خویشاوند
     /// </summary>
-    [Required(AllowEmptyStrings = false, ErrorMessage = "خیشاوندان را وارد نمایید")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "خویشاوندان را وارد نمایید")]
     public ICollection<InFamilyRelationship> FamilyRelationships { get; set; }
 
 
@@ -62,7 +62,7 @@ public class InStudent : InputsValidator<InStudent>
 
         if (FamilyRelationships == null || FamilyRelationships.Count <= 0)
         {
-            Message = "خیشاوندان را وارد نمایید";
+            Message = "خویشاوندان را وارد نمایید";
             return false;
         }
         var validFamilyRelations = new List<FamilyRelationshipEnum>()
@@ -74,13 +74,13 @@ public class InStudent : InputsValidator<InStudent>
         if (this.FamilyRelationships.Where(x => !validFamilyRelations.Contains((FamilyRelationshipEnum)x.FamilyRelationshipId))
             .GroupBy(x => x.FamilyRelationshipId).Where(x => x.Count() > 1).Any())
         {
-            Message = "خیشاوندان از نوع خواهر و برادر فقط می تواند بیشتر از 1 نفر باشند!";
+            Message = "خویشاوندان از نوع خواهر و برادر فقط می تواند بیشتر از 1 نفر باشند!";
             return false;
         }
 
         if (FamilyRelationships == null || FamilyRelationships.Count <= 0)
         {
-            Message = "خیشاوندان را وارد نمایید";
+            Message = "خویشاوندان را وارد نمایید";
             return false;
         }
         Message = "";

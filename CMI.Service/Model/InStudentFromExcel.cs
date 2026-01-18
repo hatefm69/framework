@@ -54,7 +54,7 @@ namespace CMI.Service.Model
         [Required(AllowEmptyStrings = false, ErrorMessage = "تاریخ تولد را وارد نمایید")]
         public string BirthDate { get; set; }
         [Description("خویشاوندان")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "خیشاوندان را وارد نمایید")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "خویشاوندان را وارد نمایید")]
         public string? StrFamilyRelationships { get; set; }
     }
 }
