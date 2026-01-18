@@ -71,6 +71,25 @@ namespace TestProject1
             Assert.True(data.Skip(2).First().Score3);
         }
         [Fact]
+        public void Should_Not_Have_Error_When_UploadFileWithBoolNotNullWithValuesAttribute_Is_Equal_With_finalValue()
+        {
+            var fileName = "ColumnWithBoolNotNullWithValuesAttribute.xlsx";
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var stream = File.Open(filePath, FileMode.Open);
+            using var workbook = new XLWorkbook(stream);
+            var data = workbook.GetData<InColumnWithBoolColumnNotNull>();
+            Assert.True(data.Count == 3);
+            Assert.True(data.First().Score1);
+            Assert.True(!data.First().Score2);
+            Assert.True(!data.First().Score3);
+            Assert.True(!data.Skip(1).First().Score1);
+            Assert.True(data.Skip(1).First().Score2);
+            Assert.True(data.Skip(1).First().Score3);
+            Assert.True(data.Skip(2).First().Score1);
+            Assert.True(!data.Skip(2).First().Score2);
+            Assert.True(data.Skip(2).First().Score3);
+        }
+        [Fact]
         public void Should_Have_Error_When_UploadFileWithBoolNotNullNotTheSameType_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithBoolNotNullNotTheSameType.xlsx";

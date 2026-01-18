@@ -28,13 +28,16 @@ namespace TestProject1
         /// نام
         /// </summary>
         [Description("ستون اول")]
+        [AllowedValues("زن", false, "مرد", true)]
         [Required(AllowEmptyStrings = false, ErrorMessage = "ستون اول را وارد نمایید")]
         public bool Score1 { get; set; }
         [Description("ستون دوم")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "ستون دوم را وارد نمایید")]
+        [AllowedValues("زن", false, "مرد", true)]
         public bool Score2 { get; set; }
         [Description("ستون سوم")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "ستون سوم را وارد نمایید")]
+        [AllowedValues("زن", false, "مرد", true)]
         public bool Score3 { get; set; }
     }
     public class InColumnWithStringColumnNotNull : InputsValidator<InColumnWithStringColumnNotNull>

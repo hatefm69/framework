@@ -1,6 +1,7 @@
 ﻿using AutoMapper.Internal;
 using ClosedXML.Excel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 namespace CMI.Service.HelperClasses
@@ -27,7 +28,14 @@ namespace CMI.Service.HelperClasses
             if (worksheet.LastRowUsed().RowNumber() <= 1)
                 throw new InformationException($"دانش آموزی در فایل اکسل درج نکرده اید");
 
-            var columns = typeof(T).GetProperties().Select(z => new { Name = z.Name, Description = z.GetCustomAttribute<DescriptionAttribute>()?.Description, Type = z.GetMemberType() });
+            var columns = typeof(T).GetProperties().Select(z => new
+            {
+                Name = z.Name,
+                Description = z.GetCustomAttribute<DescriptionAttribute>()?.Description,
+                Type = z.GetMemberType(),
+                Values = z.GetCustomAttribute<AllowedValuesAttribute>()?.Values
+
+            });
             foreach (var row in worksheet.RangeUsed().RowsUsed())
             {
                 // سطر اول یعنی سر ستونها
@@ -87,11 +95,23 @@ namespace CMI.Service.HelperClasses
 
                         if (bool.TryParse(cell.Value.ToString(), out bool boolCode) == false)
                         {
+                            List<object> datas = null;
+                            List<object> values = null;
+                            if (column.Values != null)
+                            {
+                                datas = column.Values.ToList().Where(z => column.Values.ToList().IndexOf(z) % 2 == 0).ToList();
+                                values = column.Values.ToList().Where(z => column.Values.ToList().IndexOf(z) % 2 != 0).ToList();
+                            }
+
                             if (cell.Value.ToString() == "غیر فعال" || cell.Value.ToString() == "نه" || cell.Value.ToString() == "false" || cell.Value.ToString() == "0")
                                 boolCode = false;
                             else
                             if (cell.Value.ToString() == "فعال" || cell.Value.ToString() == "آری" || cell.Value.ToString() == "اری" || cell.Value.ToString() == "true" || cell.Value.ToString() == "1")
                                 boolCode = true;
+                            else if (datas != null && values != null && datas.Contains(cell.Value.ToString()))
+                            {
+                                boolCode = bool.Parse(values.ToArray()[datas.IndexOf(cell.Value.ToString())].ToString());
+                            }
                             else
                                 throw new InformationException($"در سطر {rownumber} ستون {column.Description} عدد معتبر نیست");
                         }
