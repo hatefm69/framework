@@ -9,17 +9,17 @@ namespace TestProject1
         /// <summary>
         /// نام
         /// </summary>
-        [Description("Column1")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column1 را وارد نمایید")]
-        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار Column1 صحیح نمی باشد")]
+        [Description("ستون اول")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون اول را وارد نمایید")]
+        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار ستون اول صحیح نمی باشد")]
         public int Score1 { get; set; }
-        [Description("Column2")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column2 را وارد نمایید")]
-        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار Column2 صحیح نمی باشد")]
+        [Description("ستون دوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون دوم را وارد نمایید")]
+        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار ستون دوم صحیح نمی باشد")]
         public int Score2 { get; set; }
-        [Description("Column3")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column3 را وارد نمایید")]
-        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار Column3 صحیح نمی باشد")]
+        [Description("ستون سوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون سوم را وارد نمایید")]
+        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار ستون سوم صحیح نمی باشد")]
         public int Score3 { get; set; }
     }
     public class InColumnWithBoolColumnNotNull : InputsValidator<InColumnWithBoolColumnNotNull>
@@ -27,14 +27,14 @@ namespace TestProject1
         /// <summary>
         /// نام
         /// </summary>
-        [Description("Column1")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column1 را وارد نمایید")]
+        [Description("ستون اول")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون اول را وارد نمایید")]
         public bool Score1 { get; set; }
-        [Description("Column2")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column2 را وارد نمایید")]
+        [Description("ستون دوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون دوم را وارد نمایید")]
         public bool Score2 { get; set; }
-        [Description("Column3")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column3 را وارد نمایید")]
+        [Description("ستون سوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون سوم را وارد نمایید")]
         public bool Score3 { get; set; }
     }
     public class InColumnWithStringColumnNotNull : InputsValidator<InColumnWithStringColumnNotNull>
@@ -42,14 +42,14 @@ namespace TestProject1
         /// <summary>
         /// نام
         /// </summary>
-        [Description("Column1")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column1 را وارد نمایید")]
+        [Description("ستون اول")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون اول را وارد نمایید")]
         public string Score1 { get; set; }
-        [Description("Column2")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column2 را وارد نمایید")]
+        [Description("ستون دوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون دوم را وارد نمایید")]
         public string Score2 { get; set; }
-        [Description("Column3")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column3 را وارد نمایید")]
+        [Description("ستون سوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون سوم را وارد نمایید")]
         public string Score3 { get; set; }
     }
 
@@ -64,17 +64,17 @@ namespace TestProject1
         /// <summary>
         /// نام
         /// </summary>
-        [Description("Column1")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column1 را وارد نمایید")]
-        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار Column1 صحیح نمی باشد")]
+        [Description("ستون اول")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون اول را وارد نمایید")]
+        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار ستون اول صحیح نمی باشد")]
         public int? Score1 { get; set; }
-        [Description("Column2")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column2 را وارد نمایید")]
-        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار Column2 صحیح نمی باشد")]
+        [Description("ستون دوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون دوم را وارد نمایید")]
+        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار ستون دوم صحیح نمی باشد")]
         public int? Score2 { get; set; }
-        [Description("Column3")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column3 را وارد نمایید")]
-        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار Column3 صحیح نمی باشد")]
+        [Description("ستون سوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون سوم را وارد نمایید")]
+        [Range(long.MinValue, long.MaxValue, ErrorMessage = "محدوده مقدار ستون سوم صحیح نمی باشد")]
         public int? Score3 { get; set; }
     }
     public class InColumnWithBoolColumnNullable : InputsValidator<InColumnWithBoolColumnNullable>
@@ -82,14 +82,14 @@ namespace TestProject1
         /// <summary>
         /// نام
         /// </summary>
-        [Description("Column1")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column1 را وارد نمایید")]
+        [Description("ستون اول")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون اول را وارد نمایید")]
         public bool? Score1 { get; set; }
-        [Description("Column2")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column2 را وارد نمایید")]
+        [Description("ستون دوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون دوم را وارد نمایید")]
         public bool? Score2 { get; set; }
-        [Description("Column3")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column3 را وارد نمایید")]
+        [Description("ستون سوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون سوم را وارد نمایید")]
         public bool? Score3 { get; set; }
     }
     public class InColumnWithStringColumnNullable : InputsValidator<InColumnWithStringColumnNullable>
@@ -97,14 +97,14 @@ namespace TestProject1
         /// <summary>
         /// نام
         /// </summary>
-        [Description("Column1")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column1 را وارد نمایید")]
+        [Description("ستون اول")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون اول را وارد نمایید")]
         public string? Score1 { get; set; }
-        [Description("Column2")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column2 را وارد نمایید")]
+        [Description("ستون دوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون دوم را وارد نمایید")]
         public string? Score2 { get; set; }
-        [Description("Column3")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Column3 را وارد نمایید")]
+        [Description("ستون سوم")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "ستون سوم را وارد نمایید")]
         public string? Score3 { get; set; }
     }
 }
