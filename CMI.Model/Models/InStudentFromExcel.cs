@@ -52,9 +52,9 @@ namespace CMI.Model.Models
         [Description("تاریخ تولد")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "تاریخ تولد را وارد نمایید")]
         public string BirthDate { get; set; }
-        [Description("خیشاوندان")]
+        [Description("خویشاوندان")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "خیشاوندان را وارد نمایید")]
-        public string StrFamilyRelationships { get; set; }
+        public string? StrFamilyRelationships { get; set; }
         //    /// <summary>
         //    /// خیشاوند
         //    /// </summary>

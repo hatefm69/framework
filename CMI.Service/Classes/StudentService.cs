@@ -295,7 +295,7 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
             IsActive = x.IsActive ?? false,
             LevelId = levels.FirstOrDefault(level => level.Title == x.LevelTitle).Id,
             BirthDate = x.BirthDate.ToPersianDate(DateSepratorEnum.Slash),
-            familyRelationships = x.StrFamilyRelationships.Split("#").Select(str => new FamilyRelationship
+            familyRelationships = x.StrFamilyRelationships?.Split("#").Select(str => new FamilyRelationship
             {
                 TableId = TableEnum.Student,
                 FullName = str.Split("،")[1],
@@ -321,7 +321,7 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
         var familyRelationships = new List<FamilyRelationship>();
         entities.ForEach(entity =>
         {
-            entity.familyRelationships.ForEach(family =>
+            entity.familyRelationships?.ForEach(family =>
             {
                 familyRelationships.Add(new FamilyRelationship
                 {
