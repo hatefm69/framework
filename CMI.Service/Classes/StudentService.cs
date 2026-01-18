@@ -1,4 +1,5 @@
 using ClosedXML.Excel;
+using CMI.Service.Model;
 using FIS.Tools;
 
 namespace CMI.Service.Classes;

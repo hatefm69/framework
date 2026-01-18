@@ -1,4 +1,5 @@
 using CMI.Service.Classes;
+using CMI.Service.Model;
 using FIS.Tools.Exceptions;
 
 namespace CMI.WebApi.Controllers;
@@ -216,7 +217,7 @@ public class StudentController : WebAPI_Controller<Student, CmiDataContext, Stud
     {
         return ProcessJson(() =>
         {
-            var encryptedData = Request.GetAndValidateEncryptedFilesData<InSchoolByExcel>();
+            var encryptedData = Request.GetAndValidateEncryptedFilesData<InStudentFromExcel>();
             if (encryptedData == null)
                 throw new InformationException("مدل ورودی نامعتبر می باشد");
             Service.AddRangeByExcel(encryptedData.Files);
