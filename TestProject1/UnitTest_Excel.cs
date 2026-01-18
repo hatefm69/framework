@@ -10,7 +10,7 @@ namespace TestProject1
         public void Should_Not_Have_Error_When_UploadFileWithIntNotNull_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithIntNotNull.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             var data = workbook.GetData<InColumnWithIntColumnNotNull>();
@@ -29,7 +29,7 @@ namespace TestProject1
         public void Should_Have_Error_When_UploadFileWithIntNotNull_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithIntNotNullWithEnglishColumn.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             Assert.Throws<InformationException>(() =>
@@ -42,7 +42,7 @@ namespace TestProject1
         public void Should_Have_Error_When_UploadFileWithIntNotNullNotTheSameType_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithIntNotNullNotTheSameType.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             Assert.Throws<InformationException>(() =>
@@ -55,7 +55,7 @@ namespace TestProject1
         public void Should_Not_Have_Error_When_UploadFileWithBoolNotNull_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithBoolNotNull.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             var data = workbook.GetData<InColumnWithBoolColumnNotNull>();
@@ -74,7 +74,7 @@ namespace TestProject1
         public void Should_Not_Have_Error_When_UploadFileWithBoolNotNullWithValuesAttribute_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithBoolNotNullWithValuesAttribute.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             var data = workbook.GetData<InColumnWithBoolColumnNotNull>();
@@ -93,7 +93,7 @@ namespace TestProject1
         public void Should_Have_Error_When_UploadFileWithBoolNotNullNotTheSameType_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithBoolNotNullNotTheSameType.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             Assert.Throws<InformationException>(() =>
@@ -105,7 +105,7 @@ namespace TestProject1
         public void Should_Have_Error_When_UploadFileWithBoolNotNull_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithBoolNotNullWithEnglishColumn.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             Assert.Throws<InformationException>(() =>
@@ -117,7 +117,7 @@ namespace TestProject1
         public void Should_Not_Have_Error_When_UploadFileWithStringNotNull_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithStringNotNull.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             var data = workbook.GetData<InColumnWithStringColumnNotNull>();
@@ -136,7 +136,7 @@ namespace TestProject1
         public void Should_Have_Error_When_UploadFileWithStringNotNull_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithStringNotNullWithEnglishColumn.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             Assert.Throws<InformationException>(() =>
@@ -149,7 +149,7 @@ namespace TestProject1
         public void Should_Not_Have_Error_When_UploadFileWithIntNullable_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithIntNullable.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             var data = workbook.GetData<InColumnWithIntColumnNullable>();
@@ -168,7 +168,7 @@ namespace TestProject1
         public void Should_Not_Have_Error_When_UploadFileWithIntNullableNotTheSameType_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithIntNullableNotTheSameType.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             Assert.Throws<InformationException>(() =>
@@ -180,7 +180,7 @@ namespace TestProject1
         public void Should_Have_Error_When_UploadFileWithIntNullable_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithIntNullableWithEnglishColumn.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             Assert.Throws<InformationException>(() =>
@@ -192,7 +192,7 @@ namespace TestProject1
         public void Should_Not_Have_Error_When_UploadFileWithBoolNullable_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithBoolNullable.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             var data = workbook.GetData<InColumnWithBoolColumnNullable>();
@@ -211,7 +211,7 @@ namespace TestProject1
         public void Should_Have_Error_When_UploadFileWithBoolNullableNotTheSameType_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithBoolNullableNotTheSameType.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             Assert.Throws<InformationException>(() =>
@@ -223,7 +223,7 @@ namespace TestProject1
         public void Should_Have_Error_When_UploadFileWithBoolNullable_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithBoolNullableWithEnglishColumn.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             Assert.Throws<InformationException>(() =>
@@ -235,7 +235,7 @@ namespace TestProject1
         public void Should_Not_Have_Error_When_UploadFileWithStringNullable_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithStringNullable.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             var data = workbook.GetData<InColumnWithStringColumnNullable>();
@@ -254,7 +254,7 @@ namespace TestProject1
         public void Should_Have_Error_When_UploadFileWithStringNullable_Is_Equal_With_finalValue()
         {
             var fileName = "ColumnWithStringNullableWithEnglishColumn.xlsx";
-            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1", fileName);
+            var filePath = Path.Combine("D:\\Projects\\CMI\\BackEnd\\TestProject1\\Files", fileName);
             var stream = File.Open(filePath, FileMode.Open);
             using var workbook = new XLWorkbook(stream);
             Assert.Throws<InformationException>(() =>
