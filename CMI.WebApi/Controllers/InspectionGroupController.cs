@@ -164,7 +164,8 @@ public class InspectionGroupController : WebAPI_Controller<InspectionGroup, CmiD
         return ProcessJson(() =>
         {
             var inputData = Request.GetAndValidateEncryptedData<InDelete>();
-            Service.Delete(inputData!.Id);
+            if (inputData != null && inputData.Id.HasValue)
+                Service.Delete(inputData.Id.Value);
         });
     }
 

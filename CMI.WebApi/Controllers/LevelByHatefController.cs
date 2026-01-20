@@ -35,7 +35,7 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
         return ProcessJson(() =>
         {
             var gridSearchFilter = Request.GetEncryptedData<ZimeGridSearchFilter>();
-            var pageParams = gridSearchFilter.ConvertToFilterParams(15, 0);
+            var pageParams = gridSearchFilter!.ConvertToFilterParams(15, 0);
             var records = Service.SearchRecords(pageParams);
 
             return new ZimaSimpleGridData<OutLevelByHatef>
@@ -105,7 +105,7 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
         return ProcessJson(() =>
         {
             var inputData = Request.GetAndValidateEncryptedData<InLevelByHatef>();
-            var entity = _mapper.Map<InLevelByHatef, LevelByHatef>(inputData);
+            var entity = _mapper.Map<InLevelByHatef, LevelByHatef>(inputData!);
 
             //entity.Id = Guid.NewGuid();
             Service.AddRecord(entity);
@@ -125,7 +125,7 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
         {
             var inputData = Request.GetAndValidateEncryptedData<InLevelByHatef>();
 
-            Service.UpdateRecord(_mapper.Map<InLevelByHatef, LevelByHatef>(inputData));
+            Service.UpdateRecord(_mapper.Map<InLevelByHatef, LevelByHatef>(inputData!));
         });
     }
 
@@ -142,7 +142,8 @@ public class LevelByHatefController : WebAPI_Controller<LevelByHatef, CmiDataCon
         return ProcessJson(() =>
         {
             var inputData = Request.GetAndValidateEncryptedData<InDelete>();
-            Service.Delete(inputData!.Id);
+            if (inputData != null && inputData.Id.HasValue)
+                Service.Delete(inputData.Id.Value);
         });
     }
 }

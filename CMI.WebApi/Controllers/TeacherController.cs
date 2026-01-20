@@ -37,7 +37,7 @@ public class TeacherController : WebAPI_Controller<Teacher, CmiDataContext, Teac
         return ProcessJson(() =>
         {
             var gridSearchFilter = Request.GetEncryptedData<ZimeGridSearchFilter>();
-            var pageParams = gridSearchFilter.ConvertToFilterParams(15, 0);
+            var pageParams = gridSearchFilter!.ConvertToFilterParams(15, 0);
             var records = Service.SearchRecords(pageParams);
 
             return new ZimaSimpleGridData<Model.Models.OutTeacher>
@@ -87,7 +87,8 @@ public class TeacherController : WebAPI_Controller<Teacher, CmiDataContext, Teac
         return ProcessJson(() =>
         {
             var inputData = Request.GetAndValidateEncryptedData<InDelete>();
-            Service.Delete(inputData!.Id);
+            if (inputData != null && inputData.Id.HasValue)
+                Service.Delete(inputData.Id.Value);
         });
     }
 
@@ -105,7 +106,7 @@ public class TeacherController : WebAPI_Controller<Teacher, CmiDataContext, Teac
             if (Request.IsContentJson())
             {
                 var inputData = Request.GetAndValidateEncryptedData<InTeacher>();
-                var entity = _mapper.Map<InTeacher, TeacherWithFamilyRelation>(inputData);
+                var entity = _mapper.Map<InTeacher, TeacherWithFamilyRelation>(inputData!);
 
                 Service.AddRecord(entity);
             }
@@ -141,7 +142,7 @@ public class TeacherController : WebAPI_Controller<Teacher, CmiDataContext, Teac
             if (Request.IsContentJson())
             {
                 var inputData = Request.GetAndValidateEncryptedData<InTeacher>();
-                var entity = _mapper.Map<InTeacher, TeacherWithFamilyRelation>(inputData);
+                var entity = _mapper.Map<InTeacher, TeacherWithFamilyRelation>(inputData!);
 
                 Service.UpdateRecord(entity);
             }
@@ -163,7 +164,7 @@ public class TeacherController : WebAPI_Controller<Teacher, CmiDataContext, Teac
         {
             var attachmentService = Service.GetService<Attachment, AttachmentRepository, AttachmentService>();
             var gridSearchFilter = Request.GetEncryptedData<ZimeGridSearchFilter>();
-            var pageParams = gridSearchFilter.ConvertToFilterParams(15, 0);
+            var pageParams = gridSearchFilter!.ConvertToFilterParams(15, 0);
             pageParams.FilterParams = new();
             pageParams.FilterParams.Add(new FIS.Tools.ORM_Helper.Models.FilterParam()
             {

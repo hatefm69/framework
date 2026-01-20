@@ -19,7 +19,7 @@ public class StudentRepository : Repository<Student, CmiDataContext>
     public StudentWithFamilyRelation? Get(long id)
     {
         var familyRepoTBL = GetRepository<FamilyRelationship, FamilyRelationshipRepository>().EntityQueryable;
-        return EntityQueryable
+        var rst = EntityQueryable.Where(rd => rd.Id == id)
         .Include(x => x.Level)
         .Include(x => x.City)
         .Select(x => new StudentWithFamilyRelation
@@ -31,25 +31,25 @@ public class StudentRepository : Repository<Student, CmiDataContext>
                 .AsNoTracking()
                 .Where(x => x.RecordId == id)
                 .ToList())
-        })
+        });
         //.Include(x => x.FamilyRelationships)
         //.Include(x => x.EducationalQualification).Select(x => x)
-        .SingleOrDefault(rd => rd.Student.Id == id);
+        return rst.SingleOrDefault();
     }
     public Student? GetPureStudent(long id)
     {
         var familyRepoTBL = GetRepository<FamilyRelationship, FamilyRelationshipRepository>().EntityQueryable;
-        return EntityQueryable
+        return EntityQueryable.Where(rd => rd.Id == id)
         .Include(x => x.Level)
         .Include(x => x.City)
         //.Include(x => x.FamilyRelationships)
         //.Include(x => x.EducationalQualification).Select(x => x)
-        .SingleOrDefault(rd => rd.Id == id);
+        .SingleOrDefault();
     }
     public StudentWithAttachment? GetWithAttachment(long id)
     {
         var attachmentRepoTBL = GetRepository<Attachment, AttachmentRepository>().EntityQueryable;
-        return EntityQueryable
+        return EntityQueryable.Where(rd => rd.Id == id)
             .AsNoTracking()
             .Include(x => x.Level)
             .Include(x => x.City)
@@ -62,7 +62,7 @@ public class StudentRepository : Repository<Student, CmiDataContext>
                 .Where(x => x.RecordId == id)
                 .ToList()
             })
-            .SingleOrDefault(rd => rd.Student.Id == id);
+            .SingleOrDefault();
 
     }
     //return null;
@@ -74,7 +74,6 @@ public class StudentRepository : Repository<Student, CmiDataContext>
     public List<OutStudent> SearchRecords(PageParams pageParams)
     {
         var studentTbl = EntityQueryable.AsNoTracking();
-        pageParams.SortParams = new List<SortParam> { new() { OrderBy = "id", SortOrder = "desc" } };
         return FilterData(pageParams).Select(student => new OutStudent
         {
             Id = student.Id,

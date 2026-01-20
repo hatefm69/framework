@@ -22,19 +22,10 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
     }
 
     public StudentWithFamilyRelation? Get(long id)
-    {
-        var entity = EntityRepository.Get(id);
-        if (entity == null)
-            throw new InformationException("داده ای با شناسه ارسالی پیدا نشد");
-        return entity;
-    }
+        => EntityRepository.Get(id) ?? throw new InformationException("داده ای با شناسه ارسالی پیدا نشد");
+
     public StudentWithAttachment? GetWithAttachment(long id)
-    {
-        var entity = EntityRepository.GetWithAttachment(id);
-        if (entity == null)
-            throw new InformationException("داده ای با شناسه ارسالی پیدا نشد");
-        return entity;
-    }
+    => EntityRepository.GetWithAttachment(id) ?? throw new InformationException("داده ای با شناسه ارسالی پیدا نشد");
 
     public override void UpdateRecord(Student entity)
     {
@@ -45,8 +36,15 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
     {
         var familyService = GetService<FamilyRelationship, FamilyRelationshipRepository, FamilyRelationshipService>();
         familyService.DeleteRange(entity.Student.Id, TableEnum.Student);
+        entity.FamilyRelationships.ToList().ForEach(item =>
+        {
+            item.TableId = TableEnum.Student;
+            item.RecordId = entity.Student.Id;
+        });
         familyService.AddRecords(entity.FamilyRelationships.ToList());
         base.UpdateRecord(entity.Student);
+        //Must write after update or created operation else not applied
+        EntityRepository.IgnoreProperty(entity.Student, "BirthDate");
     }
     public void UpdateRecord(StudentWithFamilyRelation entity, IFormFileCollection files)
     {
@@ -107,19 +105,17 @@ public class StudentService : BaseService<Student, CmiDataContext, StudentReposi
         return EntityRepository.SearchRecords(pageParams);
     }
     public List<OutStudent> GetAll()
-    {
-        return EntityRepository.GetAll().Select(z => new OutStudent
-        {
-            BirthDate = z.BirthDate,
-            CityTitle = z.City?.Title,
-            FirstName = z.FirstName,
-            LastName = z.LastName,
-            IsActive = z.IsActive,
-            LevelTitle = z.Level?.Title,
-            FullName = $"{z.FirstName} {z.LastName}",
-            Id = z.Id
-        }).ToList();
-    }
+        => [.. EntityRepository.GetAll().Select(rd => new OutStudent
+            {
+                BirthDate = rd.BirthDate,
+                CityTitle = rd.City?.Title,
+                FirstName = rd.FirstName,
+                LastName = rd.LastName,
+                IsActive = rd.IsActive,
+                LevelTitle = rd.Level?.Title,
+                FullName = $"{rd.FirstName} {rd.LastName}",
+                Id = rd.Id
+            })];
 
     public void Delete(long id)
     {

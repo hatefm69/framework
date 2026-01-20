@@ -113,7 +113,8 @@ public class InspectionSubGroupController : WebAPI_Controller<InspectionSubGroup
         return ProcessJson(() =>
         {
             var inputData = Request.GetAndValidateEncryptedData<InInspectionSubGroup>();
-            Service.UpdateRecord(_mapper.Map<InInspectionSubGroup, InspectionSubGroup>(inputData));
+            if (inputData != null)
+                Service.UpdateRecord(_mapper.Map<InInspectionSubGroup, InspectionSubGroup>(inputData));
         });
     }
 
@@ -131,7 +132,8 @@ public class InspectionSubGroupController : WebAPI_Controller<InspectionSubGroup
         return ProcessJson(() =>
         {
             var inputData = Request.GetAndValidateEncryptedData<InDelete>();
-            Service.Delete(inputData!.Id);
+            if (inputData != null && inputData.Id.HasValue)
+                Service.Delete(inputData.Id.Value);
         });
     }
 
