@@ -19,7 +19,7 @@ public class TeacherRepository : Repository<Teacher, CmiDataContext>
     public TeacherWithFamilyRelation? Get(long id)
     {
         var familyRepoTBL = GetRepository<FamilyRelationship, FamilyRelationshipRepository>().EntityQueryable;
-        return EntityQueryable
+        var rst = EntityQueryable.Where(rd => rd.Id == id)
         .Include(x => x.Level)
         .Include(x => x.City)
         .Select(x => new TeacherWithFamilyRelation
@@ -31,25 +31,25 @@ public class TeacherRepository : Repository<Teacher, CmiDataContext>
                 .AsNoTracking()
                 .Where(x => x.RecordId == id)
                 .ToList())
-        })
+        });
         //.Include(x => x.FamilyRelationships)
         //.Include(x => x.EducationalQualification).Select(x => x)
-        .SingleOrDefault(rd => rd.Teacher.Id == id);
+        return rst.SingleOrDefault();
     }
     public Teacher? GetPureTecher(long id)
     {
         var familyRepoTBL = GetRepository<FamilyRelationship, FamilyRelationshipRepository>().EntityQueryable;
-        return EntityQueryable
-        .Include(x => x.Level)
-        .Include(x => x.City)
-        //.Include(x => x.FamilyRelationships)
-        //.Include(x => x.EducationalQualification).Select(x => x)
-        .SingleOrDefault(rd => rd.Id == id);
+        return EntityQueryable.Where(rd => rd.Id == id)
+            .Include(x => x.Level)
+            .Include(x => x.City)
+            //.Include(x => x.FamilyRelationships)
+            //.Include(x => x.EducationalQualification).Select(x => x)
+            .SingleOrDefault();
     }
     public TeacherWithAttachment? GetWithAttachment(long id)
     {
         var attachmentRepoTBL = GetRepository<Attachment, AttachmentRepository>().EntityQueryable;
-        return EntityQueryable
+        return EntityQueryable.Where(rd => rd.Id == id)
             .AsNoTracking()
             .Include(x => x.Level)
             .Include(x => x.City)
@@ -62,7 +62,7 @@ public class TeacherRepository : Repository<Teacher, CmiDataContext>
                 .Where(x => x.RecordId == id)
                 .ToList()
             })
-            .SingleOrDefault(rd => rd.Teacher.Id == id);
+            .SingleOrDefault();
 
     }
     //return null;

@@ -33,13 +33,19 @@ public class TeacherService : BaseService<Teacher, CmiDataContext, TeacherReposi
             throw new InformationException("داده ای با شناسه ارسالی پیدا نشد");
         return entity;
     }
-
     public void UpdateRecord(TeacherWithFamilyRelation entity)
     {
-        var familyRelationshipService = GetService<FamilyRelationship, FamilyRelationshipRepository, FamilyRelationshipService>();
-        familyRelationshipService.DeleteRange(entity.Teacher.Id, TableEnum.Teacher);
+        var familyService = GetService<FamilyRelationship, FamilyRelationshipRepository, FamilyRelationshipService>();
+        familyService.DeleteRange(entity.Teacher.Id, TableEnum.Teacher);
+        entity.FamilyRelationships.ToList().ForEach(item =>
+        {
+            item.TableId = TableEnum.Teacher;
+            item.RecordId = entity.Teacher.Id;
+        });
+        familyService.AddRecords(entity.FamilyRelationships.ToList());
         base.UpdateRecord(entity.Teacher);
-        familyRelationshipService.AddRecords(entity.FamilyRelationships.ToList());
+        //Must write after update or created operation else not applied
+        EntityRepository.IgnoreProperty(entity.Teacher, "BirthDate");
     }
     public void UpdateRecord(TeacherWithFamilyRelation entity, IFormFileCollection files)
     {
